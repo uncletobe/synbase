@@ -50,7 +50,7 @@
             </form>
             @if(!empty($errors->any()))
                 <div class="alert alert-danger mt-3" role="alert">
-                    <ol>
+                    <ol style="text-align:left">
                         @foreach($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
