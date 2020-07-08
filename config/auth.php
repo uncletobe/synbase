@@ -41,11 +41,16 @@ return [
             'provider' => 'users',
         ],
 
-        'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
-            'hash' => false,
+        'token' => [
+          'driver' => 'xwsse',
+          'provider' => 'japancarapi',
         ],
+
+//        'api' => [
+//            'driver' => 'token',
+//            'provider' => 'users',
+//            'hash' => false,
+//        ],
     ],
 
     /*
@@ -69,6 +74,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+
+        'japancarapi' => [
+            'driver' => 'japancarapi',
         ],
 
         // 'users' => [

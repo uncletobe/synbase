@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Helpers\TokenHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
+use App\Http\Token\XWSSE;
 
 class LoginController extends Controller
 {
@@ -16,6 +16,12 @@ class LoginController extends Controller
     public function singIn(LoginRequest $request)
     {
         $data = $request->input();
-        $token = new TokenHelper($data);
+        $xwsse = new XWSSE($data);
+        $token = $xwsse->get();
+
+        if (!empty($token)) {
+
+        }
     }
+
 }
