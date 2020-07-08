@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Token\XWSSE;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -17,10 +18,12 @@ class LoginController extends Controller
     {
         $data = $request->input();
         $xwsse = new XWSSE($data);
-        $token = $xwsse->get();
+
+        $token = $xwsse->get($data["email"], $data["password"]);
 
         if (!empty($token)) {
-
+            \Auth::login($token);
+            return redirect("/");
         }
     }
 

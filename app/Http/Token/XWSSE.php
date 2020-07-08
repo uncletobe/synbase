@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Http;
 
 class XWSSE implements Authenticatable
 {
+    private $user;
+    private $token;
+
     /**
      * @param string $email
      * @param string $password
@@ -16,13 +19,15 @@ class XWSSE implements Authenticatable
     public function get($email, $password)
     {
         $url = env("XWSSE_URL");
+        $this->user = $email;
 
         $response = Http::asForm()->post($url, [
             'user' => $email,
             'pass' => $password,
         ]);
 
-        return $this->handleResponse($response);
+        $this->handleResponse($response);
+        return $this;
     }
 
     /**
@@ -37,13 +42,8 @@ class XWSSE implements Authenticatable
         if ($statusCode == 200) {
             $arr = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $content), true );
 
-            return $arr["token"];
+            $this->token = $arr["token"];
         }
-    }
-
-    public static function login()
-    {
-
     }
 
     /**
@@ -51,10 +51,7 @@ class XWSSE implements Authenticatable
      *
      * @return string
      */
-    public function getAuthIdentifierName()
-    {
-        // TODO: Implement getAuthIdentifierName() method.
-    }
+    public function getAuthIdentifierName(){}
 
     /**
      * Get the unique identifier for the user.
@@ -63,7 +60,7 @@ class XWSSE implements Authenticatable
      */
     public function getAuthIdentifier()
     {
-        // TODO: Implement getAuthIdentifier() method.
+        return $this->token;
     }
 
     /**
@@ -71,20 +68,14 @@ class XWSSE implements Authenticatable
      *
      * @return string
      */
-    public function getAuthPassword()
-    {
-        // TODO: Implement getAuthPassword() method.
-    }
+    public function getAuthPassword(){}
 
     /**
      * Get the token value for the "remember me" session.
      *
      * @return string
      */
-    public function getRememberToken()
-    {
-        // TODO: Implement getRememberToken() method.
-    }
+    public function getRememberToken(){}
 
     /**
      * Set the token value for the "remember me" session.
@@ -92,18 +83,13 @@ class XWSSE implements Authenticatable
      * @param string $value
      * @return void
      */
-    public function setRememberToken($value)
-    {
-        // TODO: Implement setRememberToken() method.
-    }
+    public function setRememberToken($value){}
 
     /**
      * Get the column name for the "remember me" token.
      *
      * @return string
      */
-    public function getRememberTokenName()
-    {
-        // TODO: Implement getRememberTokenName() method.
-    }
+    public function getRememberTokenName(){}
+
 }

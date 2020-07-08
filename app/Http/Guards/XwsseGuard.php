@@ -9,6 +9,7 @@ use Illuminate\Contracts\Auth\Guard;
 
 class XwsseGuard implements Guard
 {
+    private $user = null;
     private $provider;
 
     public function __construct($provider)
@@ -23,7 +24,7 @@ class XwsseGuard implements Guard
      */
     public function check()
     {
-        // TODO: Implement check() method.
+        return false;
     }
 
     /**
@@ -75,6 +76,6 @@ class XwsseGuard implements Guard
      */
     public function setUser(Authenticatable $user)
     {
-        // TODO: Implement setUser() method.
+        $this->user = $user;
     }
 }

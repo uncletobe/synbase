@@ -26,10 +26,15 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        /* register guard */
         Auth::extend("token", function () {
             $provider = new XwsseServiceProvider();
-
             return new XwsseGuard($provider);
+        });
+
+        /* register provider */
+        Auth::provider("xwsse", function () {
+            return new XwsseServiceProvider();
         });
     }
 }

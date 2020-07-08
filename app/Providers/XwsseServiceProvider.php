@@ -18,17 +18,6 @@ class XwsseServiceProvider implements UserProvider
     }
 
     /**
-     * @param $email
-     * @param $password
-     * @return string
-     */
-    public function getUserToken($email, $password)
-    {
-        return $this->xwsse->get($email, $password);
-    }
-
-
-    /**
      * Retrieve a user by their unique identifier.
      *
      * @param mixed $identifier

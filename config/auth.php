@@ -13,8 +13,13 @@ return [
     |
     */
 
+//    'defaults' => [
+//        'guard' => 'web',
+//        'passwords' => 'users',
+//    ],
+
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'token',
         'passwords' => 'users',
     ],
 
@@ -42,8 +47,8 @@ return [
         ],
 
         'token' => [
-          'driver' => 'xwsse',
-          'provider' => 'japancarapi',
+          'driver' => 'token',
+          'provider' => 'xwsse',
         ],
 
 //        'api' => [
@@ -76,8 +81,8 @@ return [
             'model' => App\User::class,
         ],
 
-        'japancarapi' => [
-            'driver' => 'japancarapi',
+        'xwsse' => [
+            'driver' => 'xwsse',
         ],
 
         // 'users' => [
