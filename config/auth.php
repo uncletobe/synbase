@@ -13,9 +13,13 @@ return [
     |
     */
 
+//    'defaults' => [
+//        'guard' => 'web',
+//        'passwords' => 'users',
+//    ],
+
     'defaults' => [
-        'guard' => 'web',
-        'passwords' => 'users',
+        'guard' => 'token',
     ],
 
     /*
@@ -42,7 +46,7 @@ return [
         ],
 
         'token' => [
-          'driver' => 'session',
+          'driver' => 'token',
           'provider' => 'xwsse',
         ],
 

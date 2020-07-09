@@ -18,26 +18,12 @@ class XwsseServiceProvider implements UserProvider
     }
 
     /**
-     * @param $email
-     * @param $password
-     * @return string
-     */
-    public function getUserToken($email, $password)
-    {
-        return $this->xwsse->get($email, $password);
-    }
-
-
-    /**
      * Retrieve a user by their unique identifier.
      *
      * @param mixed $identifier
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
-    public function retrieveById($identifier)
-    {
-        // TODO: Implement retrieveById() method.
-    }
+    public function retrieveById($identifier){}
 
     /**
      * Retrieve a user by their unique identifier and "remember me" token.
@@ -46,11 +32,7 @@ class XwsseServiceProvider implements UserProvider
      * @param string $token
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
-    public function retrieveByToken($identifier, $token)
-    {
-        // TODO: Implement retrieveByToken() method.
-    }
-
+    public function retrieveByToken($identifier, $token){}
     /**
      * Update the "remember me" token for the given user in storage.
      *
@@ -58,21 +40,14 @@ class XwsseServiceProvider implements UserProvider
      * @param string $token
      * @return void
      */
-    public function updateRememberToken(Authenticatable $user, $token)
-    {
-        // TODO: Implement updateRememberToken() method.
-    }
-
+    public function updateRememberToken(Authenticatable $user, $token){}
     /**
      * Retrieve a user by the given credentials.
      *
      * @param array $credentials
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
-    public function retrieveByCredentials(array $credentials)
-    {
-        // TODO: Implement retrieveByCredentials() method.
-    }
+    public function retrieveByCredentials(array $credentials){}
 
     /**
      * Validate a user against the given credentials.
@@ -81,8 +56,5 @@ class XwsseServiceProvider implements UserProvider
      * @param array $credentials
      * @return bool
      */
-    public function validateCredentials(Authenticatable $user, array $credentials)
-    {
-        // TODO: Implement validateCredentials() method.
-    }
+    public function validateCredentials(Authenticatable $user, array $credentials){}
 }

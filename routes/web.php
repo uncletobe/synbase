@@ -20,3 +20,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'Site\HomeController@index')->name("home");
 Route::get('login', 'Auth\LoginController@index')->name("login");
 Route::post('login', 'Auth\LoginController@singIn');
+Route::get('logout', 'Auth\LoginController@logout')->name("logout");

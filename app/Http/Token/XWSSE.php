@@ -3,30 +3,43 @@
 
 namespace App\Http\Token;
 
+use Illuminate\Http\Response;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 
 class XWSSE implements Authenticatable
 {
+    private $user = null;
+    private $token = null;
+    public $error = null;
+
     /**
      * @param string $email
      * @param string $password
-     * @return string
+     * @return Authenticatable $this
      */
     public function get($email, $password)
     {
         $url = env("XWSSE_URL");
+        $this->user = $email;
 
-        $response = Http::asForm()->post($url, [
-            'user' => $email,
-            'pass' => $password,
-        ]);
+        try{
+            $response = Http::asForm()->post($url, [
+                'user' => $email,
+                'pass' => $password,
+            ]);
+        } catch (ConnectionException $e) {
+            $this->error = "Сервис временно не доступен!";
+            return $this;
+        }
 
-        return $this->handleResponse($response);
+        $this->handleResponse($response);
+        return $this;
     }
 
     /**
-     * @param $res Illuminate\Support\Facades\Http;
+     * @param $res Response
      * @return string
      */
     private function handleResponse($res)
@@ -37,13 +50,44 @@ class XWSSE implements Authenticatable
         if ($statusCode == 200) {
             $arr = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $content), true );
 
-            return $arr["token"];
+            if (!empty($arr["token"])) {
+                $this->token = $arr["token"];
+                return true;
+            }
+            $this->error = "Неверное имя пользователя или пароль!";
         }
     }
 
-    public static function login()
+    /**
+     * @return string|null
+     */
+    public function getUser()
     {
+        return $this->user;
+    }
 
+    /**
+     * @return string|null
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $user
+     */
+    public function setUser(string $user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @param string $token
+     */
+    public function setToken(string $token)
+    {
+        $this->token = $token;
     }
 
     /**
@@ -51,10 +95,7 @@ class XWSSE implements Authenticatable
      *
      * @return string
      */
-    public function getAuthIdentifierName()
-    {
-        // TODO: Implement getAuthIdentifierName() method.
-    }
+    public function getAuthIdentifierName(){}
 
     /**
      * Get the unique identifier for the user.
@@ -63,7 +104,7 @@ class XWSSE implements Authenticatable
      */
     public function getAuthIdentifier()
     {
-        // TODO: Implement getAuthIdentifier() method.
+        return $this->token;
     }
 
     /**
@@ -71,20 +112,14 @@ class XWSSE implements Authenticatable
      *
      * @return string
      */
-    public function getAuthPassword()
-    {
-        // TODO: Implement getAuthPassword() method.
-    }
+    public function getAuthPassword(){}
 
     /**
      * Get the token value for the "remember me" session.
      *
      * @return string
      */
-    public function getRememberToken()
-    {
-        // TODO: Implement getRememberToken() method.
-    }
+    public function getRememberToken(){}
 
     /**
      * Set the token value for the "remember me" session.
@@ -92,18 +127,13 @@ class XWSSE implements Authenticatable
      * @param string $value
      * @return void
      */
-    public function setRememberToken($value)
-    {
-        // TODO: Implement setRememberToken() method.
-    }
+    public function setRememberToken($value){}
 
     /**
      * Get the column name for the "remember me" token.
      *
      * @return string
      */
-    public function getRememberTokenName()
-    {
-        // TODO: Implement getRememberTokenName() method.
-    }
+    public function getRememberTokenName(){}
+
 }

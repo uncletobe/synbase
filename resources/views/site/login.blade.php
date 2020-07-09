@@ -33,6 +33,7 @@
                             class="form-control form-control-md"
                             id="authEmail"
                             placeholder="Почта"
+                            value="{{ old("email") }}"
 {{--                            required="required"--}}
                     />
                 </div>
@@ -50,11 +51,11 @@
             </form>
             @if(!empty($errors->any()))
                 <div class="alert alert-danger mt-3" role="alert">
-                    <ol style="text-align:left">
+                    <ul style="text-align:left">
                         @foreach($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
-                    </ol>
+                    </ul>
                 </div>
             @endif
             <div class="pt-4">

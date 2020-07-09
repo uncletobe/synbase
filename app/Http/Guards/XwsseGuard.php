@@ -3,17 +3,28 @@
 
 namespace App\Http\Guards;
 
-
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
 
 class XwsseGuard implements Guard
 {
+    private $user = null;
     private $provider;
 
     public function __construct($provider)
     {
         $this->provider = $provider;
+    }
+
+    public function login(Authenticatable $xwsse)
+    {
+        session()->put('user', $xwsse->getUser());
+        session()->put('token', $xwsse->getToken());
+    }
+
+    public function logout()
+    {
+        session()->flush();
     }
 
     /**
@@ -23,7 +34,7 @@ class XwsseGuard implements Guard
      */
     public function check()
     {
-        // TODO: Implement check() method.
+        return session()->has("token");
     }
 
     /**
@@ -33,7 +44,7 @@ class XwsseGuard implements Guard
      */
     public function guest()
     {
-        // TODO: Implement guest() method.
+        return !$this->check();
     }
 
     /**
@@ -43,7 +54,7 @@ class XwsseGuard implements Guard
      */
     public function user()
     {
-        // TODO: Implement user() method.
+        return session()->get("user");
     }
 
     /**
@@ -53,7 +64,7 @@ class XwsseGuard implements Guard
      */
     public function id()
     {
-        // TODO: Implement id() method.
+        return $this->user();
     }
 
     /**
@@ -64,7 +75,6 @@ class XwsseGuard implements Guard
      */
     public function validate(array $credentials = [])
     {
-        // TODO: Implement validate() method.
     }
 
     /**
@@ -75,6 +85,6 @@ class XwsseGuard implements Guard
      */
     public function setUser(Authenticatable $user)
     {
-        // TODO: Implement setUser() method.
+        $this->user = $user;
     }
 }
