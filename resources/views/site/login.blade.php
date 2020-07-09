@@ -28,7 +28,7 @@
              {{ csrf_field() }}
                 <div class="form-group">
                     <input
-{{--                            type="email"--}}
+                            type="email"
                             name="email"
                             class="form-control form-control-md"
                             id="authEmail"

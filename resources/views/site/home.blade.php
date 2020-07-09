@@ -51,7 +51,6 @@
 		.syn-line:hover {
 			background-color: aliceblue;
 			cursor: pointer;
-			transition: 0.3;
 		}
 		svg {
 			height: 20px;
@@ -97,7 +96,7 @@
 </nav>
 <div class="container">
     <div class="row d-flex justify-content-center">
-    	<div class="col-8 mt-5">
+    	<div class="col-8 d-flex justify-content-center mt-5">
     		<div class="col-8">
 	    		<div class="syn-line add-syn">
 	    			<span class="add">
