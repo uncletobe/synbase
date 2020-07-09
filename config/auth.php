@@ -42,8 +42,8 @@ return [
         ],
 
         'token' => [
-          'driver' => 'xwsse',
-          'provider' => 'japancarapi',
+          'driver' => 'session',
+          'provider' => 'xwsse',
         ],
 
 //        'api' => [
@@ -76,8 +76,8 @@ return [
             'model' => App\User::class,
         ],
 
-        'japancarapi' => [
-            'driver' => 'japancarapi',
+        'xwsse' => [
+            'driver' => 'xwsse',
         ],
 
         // 'users' => [
