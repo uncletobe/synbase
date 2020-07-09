@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 
 class Handler extends ExceptionHandler
 {
@@ -50,6 +51,18 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        /*
+         * чтобы перехватить стандартный throttle и не выдавать 429 страницу
+         */
+        if ($exception instanceof ThrottleRequestsException) {
+            return $this->response429($exception);
+        }
+
         return parent::render($request, $exception);
+    }
+
+    public function response429($e)
+    {
+        dd("Много запросов!", $e);
     }
 }
