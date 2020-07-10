@@ -18,12 +18,14 @@
         .a-logout:hover {
         	text-decoration: none;
         }
+        .syn-line-form {
+        	display: none;
+        }
         .syn-line, 
         .syn-line-form {
         	background-color: #f8f9fa;
         	border-radius: 5px;
         	padding: 10px 25px;
-        	/*padding-left: 30px;*/
         	line-height: 36px;
         }
         .add {
@@ -31,8 +33,7 @@
         	font-size: 24px;
         }
 
-		.syn-line:not(:first-child), 
-		.syn-line-form {
+		.syn-line:not(:first-child) {
 			margin-top: 20px;
 			margin-bottom: 20px;
 		}
@@ -71,6 +72,15 @@
 		#svg-ok {
 			color: green;
 		}
+		.sidebar:after {
+			position: absolute;
+		    top: 0;
+		    right: -15px;
+		    width: 1px;
+		    height: 100%;
+		    background-color: #DFDFDF;
+		    content: "";
+		}
     </style>
 </head>
 <body>
@@ -84,20 +94,32 @@
 	</svg>
 </div>
 <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="/">
-        JcBaza.ru
-    </a>
-	<div>
-		<a class="a-logout" href="/logout">
-			<span class="navbar-text pr-1">{{ Auth::user() }}</span>
-	    		<svg xmlns="http://www.w3.org/2000/svg" height="22px" color="gray" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sign-out-alt" class="svg-inline--fa fa-sign-out-alt fa-w-16" role="img" viewBox="0 0 512 512"><path fill="currentColor" d="M497 273L329 441c-15 15-41 4.5-41-17v-96H152c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136V88c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zM192 436v-40c0-6.6-5.4-12-12-12H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12V76c0-6.6-5.4-12-12-12H96c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z"/></svg>
-	    	</a>
-    </div>
+	<div class="container">
+	    <a class="navbar-brand" href="/">
+	        JcBaza.ru
+	    </a>
+	    <div>
+			<a class="a-logout" href="/logout">
+				<span class="navbar-text pr-1">{{ Auth::user() }}</span>
+		    		<svg xmlns="http://www.w3.org/2000/svg" height="22px" color="gray" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sign-out-alt" class="svg-inline--fa fa-sign-out-alt fa-w-16" role="img" viewBox="0 0 512 512"><path fill="currentColor" d="M497 273L329 441c-15 15-41 4.5-41-17v-96H152c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136V88c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zM192 436v-40c0-6.6-5.4-12-12-12H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12V76c0-6.6-5.4-12-12-12H96c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z"/>
+		    		</svg>
+		    	</a>
+    	</div>
+	</div>
 </nav>
 <div class="container">
     <div class="row d-flex justify-content-center">
-    	<div class="col-8 d-flex justify-content-center mt-5">
-    		<div class="col-8">
+    	<div class="col-12 d-flex mt-5">
+    		<div class="col-3 mr-4 sidebar">
+    			<ul class="list-group list-group-flush">
+    				<a href="/" class="list-group-item list-group-item-action">Главная</a>
+    				<a href="/synonym-list" class="list-group-item list-group-item-action">Списки синонимов</a>
+    				<a href="/profile" class="list-group-item list-group-item-action">Профиль</a>
+    				<a href="/help" class="list-group-item list-group-item-action">Помощь</a>
+    			</ul>
+    		</div>
+    		<div class="col-6">
+    			{{-- <div class="strip"></div> --}}
 	    		<div class="syn-line add-syn">
 	    			<span class="add">
 	    			<svg>
@@ -113,11 +135,11 @@
 					    <input type="text" name="word" class="form-control" placeholder="Введите слово">
 					  </div>
 					  <div class="form-group">
-					    <input type="text" name="synonym" class="form-control" placeholder="Введите синоним">
+					    <input type="text" id="syn-input" name="synonym" class="form-control" placeholder="Введите синоним">
 					  </div>
 					  <div class="text-right">
-					  	<button class="btn btn-light">Отмена</button>
-					  	<button class="btn btn-primary">Отправить</button>
+					  	<a href="/" class="btn btn-light">Отмена</a>
+					  	<a href="" class="btn btn-primary">Отправить</a>
 					  </div>
 					</form>
 	    		</div>
@@ -171,5 +193,64 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script type="text/javascript">
+	document.addEventListener("DOMContentLoaded", () => {
+		initAddSynStrip();
+	});
+
+	var count = 0;
+	
+	function initAddSynStrip() {
+		const elem = document.querySelector(".add-syn");
+		const synForm = document.querySelector(".syn-line-form");
+
+		elem.addEventListener("click", (e) => {
+			elem.style.display = "none";
+			synForm.style.display = "block";
+
+			const input = document.querySelector("#syn-input");
+			initSynInput(input);
+		})
+	}
+
+	function initSynInput(input) {
+		input.addEventListener("focus", function handler(e) {
+			addNewSynInput();
+			this.removeEventListener("focus", handler);
+		})
+	}
+
+	function addNewSynInput() {
+		const insert = document.querySelector("form > div:last-child");
+
+		if (count >= 1) {
+			soManySynonyms(insert);
+			return false;
+		}
+
+		let div = document.createElement("div");
+		div.classList.add("form-group");
+
+		let input = document.createElement("input");
+		input.type = "text";
+		input.name = "synonym" + count;
+		input.placeholder = "Введите еще синоним";
+		input.classList.add("form-control");
+		initSynInput(input);
+
+		div.appendChild(input);
+		insert.before(div);
+
+		count++;
+	}
+
+	function soManySynonyms(elem) {
+		let div = document.createElement("div");
+		div.classList.add("alert", "alert-danger");
+		div.innerHTML = "Больше синонимов добавить нельзя!";
+
+		elem.before(div);
+	}
+</script>
 </body>
 </html>

@@ -27,6 +27,11 @@ class XwsseGuard implements Guard
         session()->flush();
     }
 
+    public function token()
+    {
+        return session()->get("token");
+    }
+
     /**
      * Determine if the current user is authenticated.
      *

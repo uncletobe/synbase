@@ -16,9 +16,11 @@
 </head>
 <body>
 <nav class="navbar navbar-light bg-light">
+    <div class="container">
     <a class="navbar-brand" href="/">
         JcBaza.ru
     </a>
+    </div>
 </nav>
 <div class="container">
     <div class="row login-form-block">
@@ -28,13 +30,13 @@
              {{ csrf_field() }}
                 <div class="form-group">
                     <input
-                            type="email"
+                            {{-- type="email" --}}
                             name="email"
                             class="form-control form-control-md"
                             id="authEmail"
                             placeholder="Почта"
                             value="{{ old("email") }}"
-                            required="required"
+                            {{-- required="required" --}}
                     />
                 </div>
                 <div class="form-group">
@@ -44,7 +46,7 @@
                             class="form-control form-control-md"
                             id="authPassword"
                             placeholder="Пароль"
-                            required="required"
+                            {{-- required="required" --}}
                     />
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Войти</button>
@@ -56,6 +58,11 @@
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
+{{--                     <ul class="list-group text-left mt-4">
+                        @foreach($errors->all() as $error)
+                            <li class="list-group-item list-group-item-danger">{{ $error }}</li>
+                        @endforeach
+                    </ul> --}}
                 </div>
             @endif
             <div class="pt-4">

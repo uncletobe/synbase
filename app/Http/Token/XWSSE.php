@@ -48,7 +48,7 @@ class XWSSE implements Authenticatable
         $content = $res->body();
 
         if ($statusCode == 200) {
-            $arr = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $content), true );
+            $arr = self::getValidJsonFromApi($content);
 
             if (!empty($arr["token"])) {
                 $this->token = $arr["token"];
@@ -56,6 +56,43 @@ class XWSSE implements Authenticatable
             }
             $this->error = "Неверное имя пользователя или пароль!";
         }
+    }
+
+    public static function generateXwsse()
+    {
+        $url = "http://api.japancar.ru/profile";
+        $user = \Auth::user();
+        $token = \Auth::token();
+        $nonce = \Str::random(mt_rand(6, 12));
+
+        $t = explode(" ",microtime());
+        $dateFormat = 'Y-m-d H:i:s';
+        $time = date($dateFormat, $t[1]).substr((string)$t[0],1,3);
+
+        $digest = base64_encode(sha1($nonce . $time . $token, true));
+
+        try {
+            $response = Http::withHeaders([
+                'X-WSSE' => 'X-WSSE: UsernameToken Username="'. $user .'", PasswordDigest="'. $digest
+            .'", Nonce="'. $nonce .'", Created="'. $time . '"',
+            ])->post($url);
+
+        } catch (ConnectionException $e) {
+            dd($e);
+        }
+
+        $res = $response->body();
+        $result = self::getValidJsonFromApi($res);
+
+        dd($result);
+    }
+
+    /**
+     * @param $json
+     * @return array
+     */
+    public static function getValidJsonFromApi($json) {
+        return json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $json), true );
     }
 
     /**
