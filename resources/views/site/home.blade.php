@@ -23,6 +23,7 @@
         }
         .syn-line, 
         .syn-line-form {
+        	position: relative;
         	background-color: #f8f9fa;
         	border-radius: 5px;
         	padding: 10px 25px;
@@ -49,7 +50,8 @@
 			padding-right: 25px;
 		}
 		.add-syn:hover,
-		.syn-line:hover {
+		.syn-line:hover, 
+		.sb-active {
 			background-color: aliceblue;
 			cursor: pointer;
 		}
@@ -61,7 +63,13 @@
 			fill: gray;
 		}
 		.status-svg {
-			float: right;
+			display: flex;
+		    position: absolute;
+		    align-items: center;
+		    top: 0;
+		    right: 20px;
+		    float: right;
+		    height: 100%;
 		}
 		#svg-clock {
 			color: #007BFF;
@@ -112,14 +120,22 @@
     	<div class="col-12 d-flex mt-5">
     		<div class="col-3 mr-4 sidebar">
     			<ul class="list-group list-group-flush">
-    				<a href="/" class="list-group-item list-group-item-action">Главная</a>
+    				<a href="/" class="list-group-item list-group-item-action sb-active">Главная</a>
     				<a href="/synonym-list" class="list-group-item list-group-item-action">Списки синонимов</a>
     				<a href="/profile" class="list-group-item list-group-item-action">Профиль</a>
     				<a href="/help" class="list-group-item list-group-item-action">Помощь</a>
     			</ul>
     		</div>
     		<div class="col-6">
-    			{{-- <div class="strip"></div> --}}
+    			@if(!empty($errors->any()))
+	                <div class="alert alert-danger mt-3" role="alert">
+	                    <ul style="text-align:left">
+	                        @foreach($errors->all() as $error)
+	                            <li>{{ $error }}</li>
+	                        @endforeach
+	                    </ul>
+	                </div>
+            	@endif
 	    		<div class="syn-line add-syn">
 	    			<span class="add">
 	    			<svg>
@@ -130,16 +146,16 @@
 	    		</div>
 	    		<div class="syn-line-form">
 	    			<h5 class="syn-form">Новый список синонимов</h5>
-					<form>
+					<form action="/add-synonyms" method="GET">
 					  <div class="form-group">
 					    <input type="text" name="word" class="form-control" placeholder="Введите слово">
 					  </div>
 					  <div class="form-group">
-					    <input type="text" id="syn-input" name="synonym" class="form-control" placeholder="Введите синоним">
+					    <input type="text" id="syn-input" name="synonym" class="form-control" placeholder="Введите синоним №1" autocomplete="off">
 					  </div>
 					  <div class="text-right">
 					  	<a href="/" class="btn btn-light">Отмена</a>
-					  	<a href="" class="btn btn-primary">Отправить</a>
+					  	<button type="submit" class="btn btn-primary">Отправить</button>
 					  </div>
 					</form>
 	    		</div>
@@ -148,6 +164,9 @@
 	    			<span class="syn">Дырчик</span>
 	    			<span class="syn">Моцык</span>
 	    			<span class="syn">Мотик</span>
+	    			<span class="syn">Мокик</span>
+	    			<span class="syn">Скутер</span>
+	    			<span class="syn">Скутэр</span>
 	    			<span class="status-svg">
 	    				<svg>
 	                        <use xlink:href="#svg-clock" />
@@ -233,8 +252,9 @@
 
 		let input = document.createElement("input");
 		input.type = "text";
-		input.name = "synonym" + count;
-		input.placeholder = "Введите еще синоним";
+		input.name = "synonyms[]";
+		input.placeholder = "Введите синоним №" + (count + 2);
+		input.autocomplete = "off";
 		input.classList.add("form-control");
 		initSynInput(input);
 

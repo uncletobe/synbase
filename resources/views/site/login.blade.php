@@ -30,13 +30,13 @@
              {{ csrf_field() }}
                 <div class="form-group">
                     <input
-                            {{-- type="email" --}}
+                            type="email"
                             name="email"
                             class="form-control form-control-md"
                             id="authEmail"
                             placeholder="Почта"
                             value="{{ old("email") }}"
-                            {{-- required="required" --}}
+                            required="required"
                     />
                 </div>
                 <div class="form-group">
@@ -46,7 +46,7 @@
                             class="form-control form-control-md"
                             id="authPassword"
                             placeholder="Пароль"
-                            {{-- required="required" --}}
+                            required="required"
                     />
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Войти</button>

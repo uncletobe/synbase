@@ -22,3 +22,4 @@ Route::get('login', 'Auth\LoginController@index')->name("login");
 Route::post('login', 'Auth\LoginController@singIn');
 Route::get('logout', 'Auth\LoginController@logout')->name("logout");
 Route::get('/profile', 'Site\ProfileController@index')->name("profile");
+Route::get('add-synonyms', 'Site\SynonymController@create')->name('create');
