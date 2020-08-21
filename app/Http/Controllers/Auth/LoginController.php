@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Token\XWSSE;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Support\Facades\Validator;
 
 
 class LoginController extends Controller
@@ -16,7 +16,7 @@ class LoginController extends Controller
         if (Auth::check()) {
             return redirect("/");
         }
-        return view("site.login");
+        return view("site.auth.login");
     }
 
     public function singIn(LoginRequest $request)
@@ -29,6 +29,7 @@ class LoginController extends Controller
             Auth::login($objXwsse);
             return redirect("/");
         }
+
         return back()
             ->withErrors($objXwsse->error)
             ->withInput();

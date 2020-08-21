@@ -5,6 +5,7 @@ namespace App\Http\Guards;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Support\Facades\Config;
 
 class XwsseGuard implements Guard
 {
@@ -20,6 +21,7 @@ class XwsseGuard implements Guard
     {
         session()->put('user', $xwsse->getUser());
         session()->put('token', $xwsse->getToken());
+        session()->put('role', $xwsse->getRole());
     }
 
     public function logout()
@@ -32,6 +34,11 @@ class XwsseGuard implements Guard
         return session()->get("token");
     }
 
+    public function role()
+    {
+        return session()->get("role");
+    }
+
     /**
      * Determine if the current user is authenticated.
      *
@@ -39,7 +46,9 @@ class XwsseGuard implements Guard
      */
     public function check()
     {
-        return session()->has("token");
+        $av_roles = \Config::get("roles.available");
+        return session()->has("token")
+            && in_array($this->role(), $av_roles);
     }
 
     /**

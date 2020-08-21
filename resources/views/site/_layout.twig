@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JcBaza.ru</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://kit.fontawesome.com/c1618f3a69.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="page-grid">
+        <header class="page-header">
+            <a href="/" class="link-light">JcBaza.ru</a>
+            <div class="nav align-items-center">
+                {% if auth_check() %}
+                    <div class="mr-3">{{ auth_user() }}</div>
+                    <a href="/logout" class="nav-link link-secondary">
+                        <i class="fas fa-sign-out-alt icon-block-24"></i>
+                        <span class="sr-only">Выйти</span>
+                    </a>
+                {% endif %}
+            </div>
+        </header>
+        <main class="page-content">
+            <div class="container">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+        <footer class="page-footer">© JcBaza.ru 2020</footer>
+    </div>
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.bundle.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+    {% block javascripts %}{% endblock %}
+</body>
+</html>

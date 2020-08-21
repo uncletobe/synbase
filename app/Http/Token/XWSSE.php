@@ -10,8 +10,10 @@ use Illuminate\Support\Facades\Http;
 
 class XWSSE implements Authenticatable
 {
+    const XWSSE_URL="http://api.japancar.ru/token";
     private $user = null;
     private $token = null;
+    private $role = null;
     public $error = null;
 
     /**
@@ -21,7 +23,7 @@ class XWSSE implements Authenticatable
      */
     public function get($email, $password)
     {
-        $url = env("XWSSE_URL");
+        $url = self::XWSSE_URL;
         $this->user = $email;
 
         try{
@@ -30,7 +32,7 @@ class XWSSE implements Authenticatable
                 'pass' => $password,
             ]);
         } catch (ConnectionException $e) {
-            $this->error = "Сервис временно не доступен!";
+            $this->error["other"] = "Сервис временно не доступен!";
             return $this;
         }
 
@@ -50,11 +52,14 @@ class XWSSE implements Authenticatable
         if ($statusCode == 200) {
             $arr = self::getValidJsonFromApi($content);
 
+            if (!empty($arr["roles"])) $this->role =  $arr["roles"][0];
+            $this->role = "default";
+
             if (!empty($arr["token"])) {
                 $this->token = $arr["token"];
                 return true;
             }
-            $this->error = "Неверное имя пользователя или пароль!";
+            $this->error["other"] = "Неверное имя пользователя или пароль!";
         }
     }
 
@@ -65,7 +70,7 @@ class XWSSE implements Authenticatable
         $token = \Auth::token();
         $nonce = \Str::random(mt_rand(6, 12));
 
-        $t = explode(" ",microtime());
+        $t = explode(" ", microtime());
         $dateFormat = 'Y-m-d H:i:s';
         $time = date($dateFormat, $t[1]).substr((string)$t[0],1,3);
 
@@ -83,8 +88,6 @@ class XWSSE implements Authenticatable
 
         $res = $response->body();
         $result = self::getValidJsonFromApi($res);
-
-        dd($result);
     }
 
     /**
@@ -112,6 +115,14 @@ class XWSSE implements Authenticatable
     }
 
     /**
+     * @return string|null
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
      * @param string $user
      */
     public function setUser(string $user)
@@ -125,6 +136,14 @@ class XWSSE implements Authenticatable
     public function setToken(string $token)
     {
         $this->token = $token;
+    }
+
+    /**
+     * @param string $token
+     */
+    public function setRole(string $role)
+    {
+        $this->role = $role;
     }
 
     /**

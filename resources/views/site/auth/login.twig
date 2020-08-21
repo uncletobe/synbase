@@ -1,0 +1,44 @@
+{% extends 'site/_layout.twig' %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <h1 class="h3 mb-4">Вход в личный кабинет</h1>
+            <form action="/login" method="post" class="mb-5">
+                {{ csrf_field() }}
+
+                {% if not errors.first('password') is empty %}
+                    {% set ps_e = true %}
+                    {% set pas_error = "is-invalid" %}
+                    {% set pass_msg = errors.first('password') %}
+                {% endif %}
+                
+                {% if not errors.first('email') is empty %}
+                    {% set em_e = true %}
+                    {% set em_error = "is-invalid" %}
+                    {% set em_msg = errors.first('email') %}
+                {% endif %}
+
+                {% if not errors.first('other') is empty %}
+                    <div class="alert alert-danger">{{ errors.first('other') }}</div>
+                {% endif %}
+
+                <div class="form-group">
+                    <input name="email" class="form-control form-control-lg {{ em_error }}" type="text" aria-label="Email" placeholder="Email" value="{{ old("email") }}">
+                    {% if em_e %}
+                        <div class="invalid-feedback d-block">{{ em_msg }}</div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <input name="password" class="form-control form-control-lg {{ pas_error }}" type="password" aria-label="Пароль" placeholder="Пароль">
+                    {% if ps_e %}
+                        <div class="invalid-feedback d-block">{{ pass_msg }}</div>
+                    {% endif %}
+                </div>
+                <button class="btn btn-primary btn-lg btn-block mt-4">Войти</button>
+            </form>
+            <div class="h3 my-3"><a href="/auth/reg" class="link-underline-secondary">Зарегистрироваться</a></div>
+            <div class="h3 my-3"><a href="/auth/reset" class="link-underline-secondary">Восстановить пароль</a></div>
+        </div>
+    </div>
+{% endblock %}

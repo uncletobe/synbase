@@ -1,0 +1,18 @@
+{% extends 'site/_layout.twig' %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <h1 class="h3 mb-4">Восстановление пароля</h1>
+            <p class="lead">Укажите email на который вы регистрировали личный кабинет и мы отправим на него ссылку, для изменения пароля.</p>
+            <form action="/" class="mb-5">
+                <div class="form-group">
+                    <input class="form-control form-control-lg" type="text" aria-label="Email" placeholder="Email">
+                </div>
+                <button class="btn btn-primary btn-lg btn-block mt-4">Восстановить пароль</button>
+            </form>
+            <div class="h3 my-3"><a href="/auth/login" class="link-underline-secondary">Войти в личный кабинет</a></div>
+            <div class="h3 my-3"><a href="/auth/reg" class="link-underline-secondary">Зарегистрироваться</a></div>
+        </div>
+    </div>
+{% endblock %}

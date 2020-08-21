@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 7.18.0 on 2020-07-07 09:51:52.
+ * Generated for Laravel 7.18.0 on 2020-08-21 05:13:21.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -1666,6 +1666,13 @@ namespace Illuminate\Support\Facades {
     /**
      * 
      *
+     * @method static \Illuminate\Contracts\Auth\Authenticatable loginUsingId(mixed $id, bool $remember = false)
+     * @method static \Symfony\Component\HttpFoundation\Response|null onceBasic(string $field = 'email',array $extraConditions = [])
+     * @method static bool attempt(array $credentials = [], bool $remember = false)
+     * @method static bool once(array $credentials = [])
+     * @method static bool onceUsingId(mixed $id)
+     * @method static bool viaRemember()
+     * @method static bool|null logoutOtherDevices(string $password, string $attribute = 'password')
      * @see \Illuminate\Auth\AuthManager
      * @see \Illuminate\Contracts\Auth\Factory
      * @see \Illuminate\Contracts\Auth\Guard
@@ -1858,375 +1865,36 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Get the currently authenticated user.
+         * 
          *
-         * @return \App\User|null 
          * @static 
          */ 
-        public static function user()
+        public static function login($xwsse)
         {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->user();
+                        /** @var \App\Http\Guards\XwsseGuard $instance */
+                        return $instance->login($xwsse);
         }
         
         /**
-         * Get the ID for the currently authenticated user.
+         * 
          *
-         * @return int|string|null 
-         * @static 
-         */ 
-        public static function id()
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->id();
-        }
-        
-        /**
-         * Log a user into the application without sessions or cookies.
-         *
-         * @param array $credentials
-         * @return bool 
-         * @static 
-         */ 
-        public static function once($credentials = [])
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->once($credentials);
-        }
-        
-        /**
-         * Log the given user ID into the application without sessions or cookies.
-         *
-         * @param mixed $id
-         * @return \App\User|false 
-         * @static 
-         */ 
-        public static function onceUsingId($id)
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->onceUsingId($id);
-        }
-        
-        /**
-         * Validate a user's credentials.
-         *
-         * @param array $credentials
-         * @return bool 
-         * @static 
-         */ 
-        public static function validate($credentials = [])
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->validate($credentials);
-        }
-        
-        /**
-         * Attempt to authenticate using HTTP Basic Auth.
-         *
-         * @param string $field
-         * @param array $extraConditions
-         * @return \Symfony\Component\HttpFoundation\Response|null 
-         * @static 
-         */ 
-        public static function basic($field = 'email', $extraConditions = [])
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->basic($field, $extraConditions);
-        }
-        
-        /**
-         * Perform a stateless HTTP Basic login attempt.
-         *
-         * @param string $field
-         * @param array $extraConditions
-         * @return \Symfony\Component\HttpFoundation\Response|null 
-         * @static 
-         */ 
-        public static function onceBasic($field = 'email', $extraConditions = [])
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->onceBasic($field, $extraConditions);
-        }
-        
-        /**
-         * Attempt to authenticate a user using the given credentials.
-         *
-         * @param array $credentials
-         * @param bool $remember
-         * @return bool 
-         * @static 
-         */ 
-        public static function attempt($credentials = [], $remember = false)
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->attempt($credentials, $remember);
-        }
-        
-        /**
-         * Log the given user ID into the application.
-         *
-         * @param mixed $id
-         * @param bool $remember
-         * @return \App\User|false 
-         * @static 
-         */ 
-        public static function loginUsingId($id, $remember = false)
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->loginUsingId($id, $remember);
-        }
-        
-        /**
-         * Log a user into the application.
-         *
-         * @param \Illuminate\Contracts\Auth\Authenticatable $user
-         * @param bool $remember
-         * @return void 
-         * @static 
-         */ 
-        public static function login($user, $remember = false)
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        $instance->login($user, $remember);
-        }
-        
-        /**
-         * Log the user out of the application.
-         *
-         * @return void 
          * @static 
          */ 
         public static function logout()
         {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        $instance->logout();
+                        /** @var \App\Http\Guards\XwsseGuard $instance */
+                        return $instance->logout();
         }
         
         /**
-         * Log the user out of the application on their current device only.
-         *
-         * @return void 
-         * @static 
-         */ 
-        public static function logoutCurrentDevice()
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        $instance->logoutCurrentDevice();
-        }
-        
-        /**
-         * Invalidate other sessions for the current user.
          * 
-         * The application must be using the AuthenticateSession middleware.
          *
-         * @param string $password
-         * @param string $attribute
-         * @return bool|null 
          * @static 
          */ 
-        public static function logoutOtherDevices($password, $attribute = 'password')
+        public static function token()
         {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->logoutOtherDevices($password, $attribute);
-        }
-        
-        /**
-         * Register an authentication attempt event listener.
-         *
-         * @param mixed $callback
-         * @return void 
-         * @static 
-         */ 
-        public static function attempting($callback)
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        $instance->attempting($callback);
-        }
-        
-        /**
-         * Get the last user we attempted to authenticate.
-         *
-         * @return \App\User 
-         * @static 
-         */ 
-        public static function getLastAttempted()
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->getLastAttempted();
-        }
-        
-        /**
-         * Get a unique identifier for the auth session value.
-         *
-         * @return string 
-         * @static 
-         */ 
-        public static function getName()
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->getName();
-        }
-        
-        /**
-         * Get the name of the cookie used to store the "recaller".
-         *
-         * @return string 
-         * @static 
-         */ 
-        public static function getRecallerName()
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->getRecallerName();
-        }
-        
-        /**
-         * Determine if the user was authenticated via "remember me" cookie.
-         *
-         * @return bool 
-         * @static 
-         */ 
-        public static function viaRemember()
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->viaRemember();
-        }
-        
-        /**
-         * Get the cookie creator instance used by the guard.
-         *
-         * @return \Illuminate\Contracts\Cookie\QueueingFactory 
-         * @throws \RuntimeException
-         * @static 
-         */ 
-        public static function getCookieJar()
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->getCookieJar();
-        }
-        
-        /**
-         * Set the cookie creator instance used by the guard.
-         *
-         * @param \Illuminate\Contracts\Cookie\QueueingFactory $cookie
-         * @return void 
-         * @static 
-         */ 
-        public static function setCookieJar($cookie)
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        $instance->setCookieJar($cookie);
-        }
-        
-        /**
-         * Get the event dispatcher instance.
-         *
-         * @return \Illuminate\Contracts\Events\Dispatcher 
-         * @static 
-         */ 
-        public static function getDispatcher()
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->getDispatcher();
-        }
-        
-        /**
-         * Set the event dispatcher instance.
-         *
-         * @param \Illuminate\Contracts\Events\Dispatcher $events
-         * @return void 
-         * @static 
-         */ 
-        public static function setDispatcher($events)
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        $instance->setDispatcher($events);
-        }
-        
-        /**
-         * Get the session store used by the guard.
-         *
-         * @return \Illuminate\Contracts\Session\Session 
-         * @static 
-         */ 
-        public static function getSession()
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->getSession();
-        }
-        
-        /**
-         * Return the currently cached user.
-         *
-         * @return \App\User|null 
-         * @static 
-         */ 
-        public static function getUser()
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->getUser();
-        }
-        
-        /**
-         * Set the current user.
-         *
-         * @param \Illuminate\Contracts\Auth\Authenticatable $user
-         * @return \Illuminate\Auth\SessionGuard 
-         * @static 
-         */ 
-        public static function setUser($user)
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->setUser($user);
-        }
-        
-        /**
-         * Get the current request instance.
-         *
-         * @return \Symfony\Component\HttpFoundation\Request 
-         * @static 
-         */ 
-        public static function getRequest()
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->getRequest();
-        }
-        
-        /**
-         * Set the current request instance.
-         *
-         * @param \Symfony\Component\HttpFoundation\Request $request
-         * @return \Illuminate\Auth\SessionGuard 
-         * @static 
-         */ 
-        public static function setRequest($request)
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->setRequest($request);
-        }
-        
-        /**
-         * Determine if current user is authenticated. If not, throw an exception.
-         *
-         * @return \App\User 
-         * @throws \Illuminate\Auth\AuthenticationException
-         * @static 
-         */ 
-        public static function authenticate()
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->authenticate();
-        }
-        
-        /**
-         * Determine if the guard has a user instance.
-         *
-         * @return bool 
-         * @static 
-         */ 
-        public static function hasUser()
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->hasUser();
+                        /** @var \App\Http\Guards\XwsseGuard $instance */
+                        return $instance->token();
         }
         
         /**
@@ -2237,7 +1905,7 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function check()
         {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
+                        /** @var \App\Http\Guards\XwsseGuard $instance */
                         return $instance->check();
         }
         
@@ -2249,72 +1917,58 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function guest()
         {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
+                        /** @var \App\Http\Guards\XwsseGuard $instance */
                         return $instance->guest();
         }
         
         /**
-         * Get the user provider used by the guard.
+         * Get the currently authenticated user.
          *
-         * @return \Illuminate\Contracts\Auth\UserProvider 
+         * @return \App\User|null 
          * @static 
          */ 
-        public static function getProvider()
+        public static function user()
         {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->getProvider();
+                        /** @var \App\Http\Guards\XwsseGuard $instance */
+                        return $instance->user();
         }
         
         /**
-         * Set the user provider used by the guard.
+         * Get the ID for the currently authenticated user.
          *
-         * @param \Illuminate\Contracts\Auth\UserProvider $provider
-         * @return void 
+         * @return int|string|null 
          * @static 
          */ 
-        public static function setProvider($provider)
+        public static function id()
         {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        $instance->setProvider($provider);
+                        /** @var \App\Http\Guards\XwsseGuard $instance */
+                        return $instance->id();
         }
         
         /**
-         * Register a custom macro.
+         * Validate a user's credentials.
          *
-         * @param string $name
-         * @param object|callable $macro
-         * @return void 
-         * @static 
-         */ 
-        public static function macro($name, $macro)
-        {
-                        \Illuminate\Auth\SessionGuard::macro($name, $macro);
-        }
-        
-        /**
-         * Mix another object into the class.
-         *
-         * @param object $mixin
-         * @param bool $replace
-         * @return void 
-         * @throws \ReflectionException
-         * @static 
-         */ 
-        public static function mixin($mixin, $replace = true)
-        {
-                        \Illuminate\Auth\SessionGuard::mixin($mixin, $replace);
-        }
-        
-        /**
-         * Checks if macro is registered.
-         *
-         * @param string $name
+         * @param array $credentials
          * @return bool 
          * @static 
          */ 
-        public static function hasMacro($name)
+        public static function validate($credentials = [])
         {
-                        return \Illuminate\Auth\SessionGuard::hasMacro($name);
+                        /** @var \App\Http\Guards\XwsseGuard $instance */
+                        return $instance->validate($credentials);
+        }
+        
+        /**
+         * Set the current user.
+         *
+         * @param \Illuminate\Contracts\Auth\Authenticatable $user
+         * @return void 
+         * @static 
+         */ 
+        public static function setUser($user)
+        {
+                        /** @var \App\Http\Guards\XwsseGuard $instance */
+                        $instance->setUser($user);
         }
          
     }
@@ -4085,6 +3739,110 @@ namespace Illuminate\Support\Facades {
         public static function hasMacro($name)
         {
                         return \Illuminate\Cookie\CookieJar::hasMacro($name);
+        }
+         
+    }
+
+    /**
+     * 
+     *
+     * @see \Illuminate\Encryption\Encrypter
+     */ 
+    class Crypt {
+        
+        /**
+         * Determine if the given key and cipher combination is valid.
+         *
+         * @param string $key
+         * @param string $cipher
+         * @return bool 
+         * @static 
+         */ 
+        public static function supported($key, $cipher)
+        {
+                        return \Illuminate\Encryption\Encrypter::supported($key, $cipher);
+        }
+        
+        /**
+         * Create a new encryption key for the given cipher.
+         *
+         * @param string $cipher
+         * @return string 
+         * @static 
+         */ 
+        public static function generateKey($cipher)
+        {
+                        return \Illuminate\Encryption\Encrypter::generateKey($cipher);
+        }
+        
+        /**
+         * Encrypt the given value.
+         *
+         * @param mixed $value
+         * @param bool $serialize
+         * @return string 
+         * @throws \Illuminate\Contracts\Encryption\EncryptException
+         * @static 
+         */ 
+        public static function encrypt($value, $serialize = true)
+        {
+                        /** @var \Illuminate\Encryption\Encrypter $instance */
+                        return $instance->encrypt($value, $serialize);
+        }
+        
+        /**
+         * Encrypt a string without serialization.
+         *
+         * @param string $value
+         * @return string 
+         * @throws \Illuminate\Contracts\Encryption\EncryptException
+         * @static 
+         */ 
+        public static function encryptString($value)
+        {
+                        /** @var \Illuminate\Encryption\Encrypter $instance */
+                        return $instance->encryptString($value);
+        }
+        
+        /**
+         * Decrypt the given value.
+         *
+         * @param string $payload
+         * @param bool $unserialize
+         * @return mixed 
+         * @throws \Illuminate\Contracts\Encryption\DecryptException
+         * @static 
+         */ 
+        public static function decrypt($payload, $unserialize = true)
+        {
+                        /** @var \Illuminate\Encryption\Encrypter $instance */
+                        return $instance->decrypt($payload, $unserialize);
+        }
+        
+        /**
+         * Decrypt the given string without unserialization.
+         *
+         * @param string $payload
+         * @return string 
+         * @throws \Illuminate\Contracts\Encryption\DecryptException
+         * @static 
+         */ 
+        public static function decryptString($payload)
+        {
+                        /** @var \Illuminate\Encryption\Encrypter $instance */
+                        return $instance->decryptString($payload);
+        }
+        
+        /**
+         * Get the encryption key.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getKey()
+        {
+                        /** @var \Illuminate\Encryption\Encrypter $instance */
+                        return $instance->getKey();
         }
          
     }
@@ -16071,6 +15829,930 @@ namespace Facade\Ignition\Facades {
  
 }
 
+namespace TwigBridge\Facade { 
+
+    /**
+     * 
+     *
+     * @see \Twig\Environment
+     * @see \TwigBridge\Bridge
+     */ 
+    class Twig {
+        
+        /**
+         * Get the Laravel app.
+         *
+         * @return \Illuminate\Contracts\Container\Container 
+         * @static 
+         */ 
+        public static function getApplication()
+        {
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->getApplication();
+        }
+        
+        /**
+         * Set the Laravel app.
+         *
+         * @param \Illuminate\Contracts\Container\Container $app
+         * @return void 
+         * @static 
+         */ 
+        public static function setApplication($app)
+        {
+                        /** @var \TwigBridge\Bridge $instance */
+                        $instance->setApplication($app);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function loadTemplate($name, $index = null)
+        {
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->loadTemplate($name, $index);
+        }
+        
+        /**
+         * Lint (check) the syntax of a file on the view paths.
+         *
+         * @param string $file File to check. Supports dot-syntax.
+         * @return bool Whether the file passed or not.
+         * @static 
+         */ 
+        public static function lint($file)
+        {
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->lint($file);
+        }
+        
+        /**
+         * Merges a context with the shared variables, same as mergeGlobals()
+         *
+         * @param array $context An array representing the context
+         * @return array The context merged with the globals
+         * @static 
+         */ 
+        public static function mergeShared($context)
+        {
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->mergeShared($context);
+        }
+        
+        /**
+         * Gets the base template class for compiled templates.
+         *
+         * @return string The base template class name
+         * @static 
+         */ 
+        public static function getBaseTemplateClass()
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->getBaseTemplateClass();
+        }
+        
+        /**
+         * Sets the base template class for compiled templates.
+         *
+         * @param string $class The base template class name
+         * @static 
+         */ 
+        public static function setBaseTemplateClass($class)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->setBaseTemplateClass($class);
+        }
+        
+        /**
+         * Enables debugging mode.
+         *
+         * @static 
+         */ 
+        public static function enableDebug()
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->enableDebug();
+        }
+        
+        /**
+         * Disables debugging mode.
+         *
+         * @static 
+         */ 
+        public static function disableDebug()
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->disableDebug();
+        }
+        
+        /**
+         * Checks if debug mode is enabled.
+         *
+         * @return bool true if debug mode is enabled, false otherwise
+         * @static 
+         */ 
+        public static function isDebug()
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->isDebug();
+        }
+        
+        /**
+         * Enables the auto_reload option.
+         *
+         * @static 
+         */ 
+        public static function enableAutoReload()
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->enableAutoReload();
+        }
+        
+        /**
+         * Disables the auto_reload option.
+         *
+         * @static 
+         */ 
+        public static function disableAutoReload()
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->disableAutoReload();
+        }
+        
+        /**
+         * Checks if the auto_reload option is enabled.
+         *
+         * @return bool true if auto_reload is enabled, false otherwise
+         * @static 
+         */ 
+        public static function isAutoReload()
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->isAutoReload();
+        }
+        
+        /**
+         * Enables the strict_variables option.
+         *
+         * @static 
+         */ 
+        public static function enableStrictVariables()
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->enableStrictVariables();
+        }
+        
+        /**
+         * Disables the strict_variables option.
+         *
+         * @static 
+         */ 
+        public static function disableStrictVariables()
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->disableStrictVariables();
+        }
+        
+        /**
+         * Checks if the strict_variables option is enabled.
+         *
+         * @return bool true if strict_variables is enabled, false otherwise
+         * @static 
+         */ 
+        public static function isStrictVariables()
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->isStrictVariables();
+        }
+        
+        /**
+         * Gets the current cache implementation.
+         *
+         * @param bool $original Whether to return the original cache option or the real cache instance
+         * @return \Twig\CacheInterface|string|false A Twig\Cache\CacheInterface implementation,
+         *                                     an absolute path to the compiled templates,
+         *                                     or false to disable cache
+         * @static 
+         */ 
+        public static function getCache($original = true)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->getCache($original);
+        }
+        
+        /**
+         * Sets the current cache implementation.
+         *
+         * @param \Twig\CacheInterface|string|false $cache A Twig\Cache\CacheInterface implementation,
+         *                                           an absolute path to the compiled templates,
+         *                                           or false to disable cache
+         * @static 
+         */ 
+        public static function setCache($cache)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->setCache($cache);
+        }
+        
+        /**
+         * Gets the template class associated with the given string.
+         * 
+         * The generated template class is based on the following parameters:
+         * 
+         *  * The cache key for the given template;
+         *  * The currently enabled extensions;
+         *  * Whether the Twig C extension is available or not;
+         *  * PHP version;
+         *  * Twig version;
+         *  * Options with what environment was created.
+         *
+         * @param string $name The name for which to calculate the template class name
+         * @param int|null $index The index if it is an embedded template
+         * @return string The template class name
+         * @internal 
+         * @static 
+         */ 
+        public static function getTemplateClass($name, $index = null)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->getTemplateClass($name, $index);
+        }
+        
+        /**
+         * Renders a template.
+         *
+         * @param string|\Twig\TemplateWrapper $name The template name
+         * @param array $context An array of parameters to pass to the template
+         * @return string The rendered template
+         * @throws LoaderError  When the template cannot be found
+         * @throws SyntaxError  When an error occurred during compilation
+         * @throws RuntimeError When an error occurred during rendering
+         * @static 
+         */ 
+        public static function render($name, $context = [])
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->render($name, $context);
+        }
+        
+        /**
+         * Displays a template.
+         *
+         * @param string|\Twig\TemplateWrapper $name The template name
+         * @param array $context An array of parameters to pass to the template
+         * @throws LoaderError  When the template cannot be found
+         * @throws SyntaxError  When an error occurred during compilation
+         * @throws RuntimeError When an error occurred during rendering
+         * @static 
+         */ 
+        public static function display($name, $context = [])
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->display($name, $context);
+        }
+        
+        /**
+         * Loads a template.
+         *
+         * @param string|\Twig\TemplateWrapper $name The template name
+         * @throws LoaderError  When the template cannot be found
+         * @throws RuntimeError When a previously generated cache is corrupted
+         * @throws SyntaxError  When an error occurred during compilation
+         * @return \Twig\TemplateWrapper 
+         * @static 
+         */ 
+        public static function load($name)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->load($name);
+        }
+        
+        /**
+         * 
+         *
+         * @internal 
+         * @static 
+         */ 
+        public static function loadClass($cls, $name, $index = null)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->loadClass($cls, $name, $index);
+        }
+        
+        /**
+         * Creates a template from source.
+         * 
+         * This method should not be used as a generic way to load templates.
+         *
+         * @param string $template The template source
+         * @param string $name An optional name of the template to be used in error messages
+         * @return \Twig\TemplateWrapper A template instance representing the given template name
+         * @throws LoaderError When the template cannot be found
+         * @throws SyntaxError When an error occurred during compilation
+         * @static 
+         */ 
+        public static function createTemplate($template, $name = null)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->createTemplate($template, $name);
+        }
+        
+        /**
+         * Returns true if the template is still fresh.
+         * 
+         * Besides checking the loader for freshness information,
+         * this method also checks if the enabled extensions have
+         * not changed.
+         *
+         * @param string $name The template name
+         * @param int $time The last modification time of the cached template
+         * @return bool true if the template is fresh, false otherwise
+         * @static 
+         */ 
+        public static function isTemplateFresh($name, $time)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->isTemplateFresh($name, $time);
+        }
+        
+        /**
+         * Tries to load a template consecutively from an array.
+         * 
+         * Similar to load() but it also accepts instances of \Twig\Template and
+         * \Twig\TemplateWrapper, and an array of templates where each is tried to be loaded.
+         *
+         * @param string|\Twig\TemplateWrapper|array $names A template or an array of templates to try consecutively
+         * @return \Twig\TemplateWrapper|\Twig\Template 
+         * @throws LoaderError When none of the templates can be found
+         * @throws SyntaxError When an error occurred during compilation
+         * @static 
+         */ 
+        public static function resolveTemplate($names)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->resolveTemplate($names);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setLexer($lexer)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->setLexer($lexer);
+        }
+        
+        /**
+         * Tokenizes a source code.
+         *
+         * @return \Twig\TokenStream 
+         * @throws SyntaxError When the code is syntactically wrong
+         * @static 
+         */ 
+        public static function tokenize($source)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->tokenize($source);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setParser($parser)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->setParser($parser);
+        }
+        
+        /**
+         * Converts a token stream to a node tree.
+         *
+         * @return \Twig\ModuleNode 
+         * @throws SyntaxError When the token stream is syntactically or semantically wrong
+         * @static 
+         */ 
+        public static function parse($stream)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->parse($stream);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setCompiler($compiler)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->setCompiler($compiler);
+        }
+        
+        /**
+         * Compiles a node and returns the PHP code.
+         *
+         * @return string The compiled PHP source code
+         * @static 
+         */ 
+        public static function compile($node)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->compile($node);
+        }
+        
+        /**
+         * Compiles a template source code.
+         *
+         * @return string The compiled PHP source code
+         * @throws SyntaxError When there was an error during tokenizing, parsing or compiling
+         * @static 
+         */ 
+        public static function compileSource($source)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->compileSource($source);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setLoader($loader)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->setLoader($loader);
+        }
+        
+        /**
+         * Gets the Loader instance.
+         *
+         * @return \Twig\LoaderInterface 
+         * @static 
+         */ 
+        public static function getLoader()
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->getLoader();
+        }
+        
+        /**
+         * Sets the default template charset.
+         *
+         * @param string $charset The default charset
+         * @static 
+         */ 
+        public static function setCharset($charset)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->setCharset($charset);
+        }
+        
+        /**
+         * Gets the default template charset.
+         *
+         * @return string The default charset
+         * @static 
+         */ 
+        public static function getCharset()
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->getCharset();
+        }
+        
+        /**
+         * Returns true if the given extension is registered.
+         *
+         * @param string $class The extension class name
+         * @return bool Whether the extension is registered or not
+         * @static 
+         */ 
+        public static function hasExtension($class)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->hasExtension($class);
+        }
+        
+        /**
+         * Adds a runtime loader.
+         *
+         * @static 
+         */ 
+        public static function addRuntimeLoader($loader)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->addRuntimeLoader($loader);
+        }
+        
+        /**
+         * Gets an extension by class name.
+         *
+         * @param string $class The extension class name
+         * @return \Twig\ExtensionInterface 
+         * @static 
+         */ 
+        public static function getExtension($class)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->getExtension($class);
+        }
+        
+        /**
+         * Returns the runtime implementation of a Twig element (filter/function/test).
+         *
+         * @param string $class A runtime class name
+         * @return object The runtime implementation
+         * @throws RuntimeError When the template cannot be found
+         * @static 
+         */ 
+        public static function getRuntime($class)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->getRuntime($class);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function addExtension($extension)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->addExtension($extension);
+        }
+        
+        /**
+         * Registers an array of extensions.
+         *
+         * @param array $extensions An array of extensions
+         * @static 
+         */ 
+        public static function setExtensions($extensions)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->setExtensions($extensions);
+        }
+        
+        /**
+         * Returns all registered extensions.
+         *
+         * @return \Twig\ExtensionInterface[] An array of extensions (keys are for internal usage only and should not be relied on)
+         * @static 
+         */ 
+        public static function getExtensions()
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->getExtensions();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function addTokenParser($parser)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->addTokenParser($parser);
+        }
+        
+        /**
+         * Gets the registered Token Parsers.
+         *
+         * @return \Twig\TokenParserInterface[] 
+         * @internal 
+         * @static 
+         */ 
+        public static function getTokenParsers()
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->getTokenParsers();
+        }
+        
+        /**
+         * Gets registered tags.
+         *
+         * @return \Twig\TokenParserInterface[] 
+         * @internal 
+         * @static 
+         */ 
+        public static function getTags()
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->getTags();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function addNodeVisitor($visitor)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->addNodeVisitor($visitor);
+        }
+        
+        /**
+         * Gets the registered Node Visitors.
+         *
+         * @return \Twig\NodeVisitorInterface[] 
+         * @internal 
+         * @static 
+         */ 
+        public static function getNodeVisitors()
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->getNodeVisitors();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function addFilter($filter)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->addFilter($filter);
+        }
+        
+        /**
+         * Get a filter by name.
+         * 
+         * Subclasses may override this method and load filters differently;
+         * so no list of filters is available.
+         *
+         * @param string $name The filter name
+         * @return \Twig\TwigFilter|false 
+         * @internal 
+         * @static 
+         */ 
+        public static function getFilter($name)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->getFilter($name);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function registerUndefinedFilterCallback($callable)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->registerUndefinedFilterCallback($callable);
+        }
+        
+        /**
+         * Gets the registered Filters.
+         * 
+         * Be warned that this method cannot return filters defined with registerUndefinedFilterCallback.
+         *
+         * @return \Twig\TwigFilter[] 
+         * @see registerUndefinedFilterCallback
+         * @internal 
+         * @static 
+         */ 
+        public static function getFilters()
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->getFilters();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function addTest($test)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->addTest($test);
+        }
+        
+        /**
+         * Gets the registered Tests.
+         *
+         * @return \Twig\TwigTest[] 
+         * @internal 
+         * @static 
+         */ 
+        public static function getTests()
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->getTests();
+        }
+        
+        /**
+         * Gets a test by name.
+         *
+         * @param string $name The test name
+         * @return \Twig\TwigTest|false 
+         * @internal 
+         * @static 
+         */ 
+        public static function getTest($name)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->getTest($name);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function addFunction($function)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->addFunction($function);
+        }
+        
+        /**
+         * Get a function by name.
+         * 
+         * Subclasses may override this method and load functions differently;
+         * so no list of functions is available.
+         *
+         * @param string $name function name
+         * @return \Twig\TwigFunction|false 
+         * @internal 
+         * @static 
+         */ 
+        public static function getFunction($name)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->getFunction($name);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function registerUndefinedFunctionCallback($callable)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->registerUndefinedFunctionCallback($callable);
+        }
+        
+        /**
+         * Gets registered functions.
+         * 
+         * Be warned that this method cannot return functions defined with registerUndefinedFunctionCallback.
+         *
+         * @return \Twig\TwigFunction[] 
+         * @see registerUndefinedFunctionCallback
+         * @internal 
+         * @static 
+         */ 
+        public static function getFunctions()
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->getFunctions();
+        }
+        
+        /**
+         * Registers a Global.
+         * 
+         * New globals can be added before compiling or rendering a template;
+         * but after, you can only update existing globals.
+         *
+         * @param string $name The global name
+         * @param mixed $value The global value
+         * @static 
+         */ 
+        public static function addGlobal($name, $value)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->addGlobal($name, $value);
+        }
+        
+        /**
+         * Gets the registered Globals.
+         *
+         * @return array An array of globals
+         * @internal 
+         * @static 
+         */ 
+        public static function getGlobals()
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->getGlobals();
+        }
+        
+        /**
+         * Merges a context with the defined globals.
+         *
+         * @param array $context An array representing the context
+         * @return array The context merged with the globals
+         * @static 
+         */ 
+        public static function mergeGlobals($context)
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->mergeGlobals($context);
+        }
+        
+        /**
+         * Gets the registered unary Operators.
+         *
+         * @return array An array of unary operators
+         * @internal 
+         * @static 
+         */ 
+        public static function getUnaryOperators()
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->getUnaryOperators();
+        }
+        
+        /**
+         * Gets the registered binary Operators.
+         *
+         * @return array An array of binary operators
+         * @internal 
+         * @static 
+         */ 
+        public static function getBinaryOperators()
+        {
+            //Method inherited from \Twig\Environment            
+                        /** @var \TwigBridge\Bridge $instance */
+                        return $instance->getBinaryOperators();
+        }
+         
+    }
+ 
+}
+
 
 namespace  { 
 
@@ -16093,6 +16775,8 @@ namespace  {
     class Config extends \Illuminate\Support\Facades\Config {}
 
     class Cookie extends \Illuminate\Support\Facades\Cookie {}
+
+    class Crypt extends \Illuminate\Support\Facades\Crypt {}
 
     class DB extends \Illuminate\Support\Facades\DB {}
 
@@ -19021,6 +19705,8 @@ namespace  {
     class Debugbar extends \Barryvdh\Debugbar\Facade {}
 
     class Flare extends \Facade\Ignition\Facades\Flare {}
+
+    class Twig extends \TwigBridge\Facade\Twig {}
  
 }
 

@@ -1,0 +1,27 @@
+{% extends 'site/_layout.twig' %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <h1 class="h3 mb-4">Регистрация</h1>
+            <form action="/" class="mb-5">
+                <div class="form-group">
+                    <input class="form-control form-control-lg is-invalid" type="text" aria-label="Email" placeholder="Email">
+                    <div class="invalid-feedback">
+                        Такой email уже занят, наверное вы регистрировались раньше.
+                        <br>Попробуйте <a href="/auth/reset" class="link-underline-danger">восстановить пароль</a>.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input class="form-control form-control-lg" type="password" aria-label="Пароль" placeholder="Пароль">
+                </div>
+                <button class="btn btn-primary btn-lg btn-block mt-4" onclick="this.disabled = true;this.querySelector('.spinner-border').classList.remove('d-none')">
+                    <span style="vertical-align: middle; margin-top: -4px;" class="spinner-border spinner-border-sm mr-2 d-none" role="status" aria-hidden="true"></span>
+                    Зарегистрироваться
+                </button>
+            </form>
+            <div class="h3 my-3"><a href="/auth/login" class="link-underline-secondary">Войти в личный кабинет</a></div>
+            <div class="h3 my-3"><a href="/auth/reset" class="link-underline-secondary">Восстановить пароль</a></div>
+        </div>
+    </div>
+{% endblock %}

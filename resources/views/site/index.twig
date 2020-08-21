@@ -1,0 +1,227 @@
+{% extends 'site/_layout.twig' %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-xl-8">
+            <div id="formToggle" class="card card-form-toggle mb-3" role="button">
+                <div class="card-body py-4">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <i class="fas fa-plus icon-block-24"></i>
+                        </div>
+                        <div class="col">Добавить список синонимов</div>
+                    </div>
+                </div>
+            </div>
+            <div id="formContainer" class="card d-none mb-3">
+                <div class="card-body">
+                    <h3 class="mb-4">Новый список синонимов</h3>
+                    <form id="form" action="/add" method="post">
+                        <div id="inputsContainer">
+                            <div class="form-group mb-4">
+                                <input type="text" name="words[]" data-word="main" class="form-control form-control-lg" aria-label="Введите слово" placeholder="Введите слово">
+                                <div class="invalid-feedback">Введите главное слово</div>
+                            </div>
+                            <div class="form-group mb-4" data-clone>
+                                <input type="text" name="words[]" data-word="synonym" class="form-control form-control-lg" aria-label="Введите синоним" placeholder="Введите синоним">
+                                <div class="invalid-feedback">Добавьте хотя бы один синоним</div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-end">
+                            <div class="col-auto">
+                                <button id="formCancel" class="btn btn-link btn-lg link-secondary">Отменить</button>
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary btn-lg">Отправить</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% for words in synonyms %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <ul class="row list-unstyled lead mb-0">
+                                    {% for word in words.list %}
+                                        <li class="col-auto my-1{% if loop.index == 1 %} font-weight-bold{% endif %}">{{ word }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="col-auto">
+                                {% if words.state == 'check' %}
+                                    <i class="fas fa-clock icon-block-24 text-secondary" data-toggle="tooltip" title="Идёт проверка синонимов"></i>
+                                {% elseif words.state == 'success' %}
+                                    <i class="fas fa-check-circle icon-block-24 text-success" data-toggle="tooltip" title="Список синонимов принят"></i>
+                                {% elseif words.state == 'canceled' %}
+                                    <i class="fas fa-exclamation-circle icon-block-24 text-danger" data-toggle="tooltip" title="Список синонимов отклонён"></i>
+                                {% endif %}
+                            </div>
+                            {% if words.editable %}
+                                <div class="col-12 mt-2 small" data-editable="{{ words.editable }}">
+                                    <div class="text-secondary mb-1">Вы можете изменить список в течении <span data-timer></span></div>
+                                    <a href="" class="link-secondary mr-2">Редактировать</a>
+                                    <a href="" class="link-secondary mr-2">Удалить</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            {#<nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>#}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            /**
+             * Показать / скрыть форму добавления синонимов
+             */
+
+            var formToggle = document.getElementById('formToggle');
+            var formCancel = document.getElementById('formCancel');
+            var formContainer = document.getElementById('formContainer');
+
+            formToggle.addEventListener('click', function (event) {
+                event.preventDefault();
+                formContainer.classList.remove('d-none');
+                this.classList.add('d-none');
+            });
+
+            formCancel.addEventListener('click', function (event) {
+                event.preventDefault();
+                formContainer.classList.add('d-none');
+                formToggle.classList.remove('d-none');
+            });
+
+
+            /**
+             * Пример валидации полей
+             */
+
+            var form = document.getElementById('form');
+
+            form.addEventListener('submit', function(event) {
+                var valid = true;
+                var inputs = this.querySelectorAll('input[type="text"]');
+                var mainWord = inputs[0];
+
+                var synonyms = Array.prototype.filter.call(inputs, function (elem, index) {
+                    if (index !== 0) return elem;
+                });
+
+                inputs.forEach(function (elem) {
+                    elem.classList.remove('is-invalid');
+                });
+
+                var validSynonyms = synonyms.filter(function (elem) {
+                    if (elem.value !== '') return elem;
+                });
+
+                if (mainWord.value === '') {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    mainWord.classList.add('is-invalid');
+                    valid = false;
+                }
+
+                if (validSynonyms.length < 1) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    synonyms[0].classList.add('is-invalid');
+                    valid = false;
+                }
+
+                if (valid) {
+                    synonyms.forEach(function (elem) {
+                        if (elem.value === '') elem.setAttribute('disabled', 'true');
+                    });
+                }
+            });
+
+
+            /**
+             * Пример добавления новых input полей
+             */
+
+            var inputsContainer = document.getElementById('inputsContainer');
+            var filledInput = [];
+
+            document.addEventListener('keyup', function (event) {
+                var target = event.target;
+                var inputOnPage = document.querySelectorAll('input[type="text"]').length;
+
+                if (target.tagName === 'INPUT') {
+                    target.classList.remove('is-invalid');
+                }
+
+                if (target.tagName === 'INPUT' && filledInput.indexOf(target) === -1) {
+                    filledInput.push(target);
+                }
+
+                if (inputOnPage === filledInput.length) {
+                    var cloneFormGroup = inputsContainer.querySelector('[data-clone]').cloneNode(true);
+                    cloneFormGroup.querySelector('input').value = '';
+                    inputsContainer.append(cloneFormGroup);
+                }
+            });
+
+
+            /**
+             * Пример таймера редактирования
+             */
+
+            var editable = document.querySelectorAll('[data-editable]');
+
+            editable.forEach(function (elem) {
+                countDownDate.call(elem, elem.getAttribute('data-editable'));
+            });
+
+            function countDownDate(date) {
+                var elem = this;
+                var timer = this.querySelector('[data-timer]');
+
+                var countDownDate = new Date(date);
+
+                var x = setInterval(function() {
+                    var now = new Date().getTime();
+                    var distance = countDownDate - now;
+
+                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    timer.innerHTML = (days ? days + 'д ' : '') + (hours ? hours + 'ч ' : '') +
+                        (minutes ? minutes + 'м ' : '') + seconds + 'с';
+
+                    if (distance < 0) {
+                        clearInterval(x);
+                        elem.remove();
+                    }
+                }, 1000);
+            }
+        });
+    </script>
+{% endblock %}
