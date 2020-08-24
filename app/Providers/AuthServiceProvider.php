@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Guards\XwsseGuard;
+use App\Http\Guards\TokenGuard;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -28,13 +28,13 @@ class AuthServiceProvider extends ServiceProvider
 
         /* register guard */
         Auth::extend("token", function () {
-            $provider = new XwsseServiceProvider();
-            return new XwsseGuard($provider);
+            $provider = new TokenServiceProvider();
+            return new TokenGuard($provider);
         });
 
         /* register provider */
-        Auth::provider("xwsse", function () {
-            return new XwsseServiceProvider();
+        Auth::provider("token", function () {
+            return new TokenServiceProvider();
         });
     }
 }

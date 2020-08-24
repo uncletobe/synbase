@@ -7,7 +7,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Config;
 
-class XwsseGuard implements Guard
+class TokenGuard implements Guard
 {
     private $user = null;
     private $provider;

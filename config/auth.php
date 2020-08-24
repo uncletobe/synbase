@@ -47,7 +47,7 @@ return [
 
         'token' => [
           'driver' => 'token',
-          'provider' => 'xwsse',
+          'provider' => 'token',
         ],
 
 //        'api' => [
@@ -80,8 +80,8 @@ return [
             'model' => App\User::class,
         ],
 
-        'xwsse' => [
-            'driver' => 'xwsse',
+        'token' => [
+            'driver' => 'token',
         ],
 
         // 'users' => [

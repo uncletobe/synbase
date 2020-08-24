@@ -1871,7 +1871,7 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function login($xwsse)
         {
-                        /** @var \App\Http\Guards\XwsseGuard $instance */
+                        /** @var \App\Http\Guards\TokenGuard $instance */
                         return $instance->login($xwsse);
         }
         
@@ -1882,7 +1882,7 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function logout()
         {
-                        /** @var \App\Http\Guards\XwsseGuard $instance */
+                        /** @var \App\Http\Guards\TokenGuard $instance */
                         return $instance->logout();
         }
         
@@ -1893,7 +1893,7 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function token()
         {
-                        /** @var \App\Http\Guards\XwsseGuard $instance */
+                        /** @var \App\Http\Guards\TokenGuard $instance */
                         return $instance->token();
         }
         
@@ -1905,7 +1905,7 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function check()
         {
-                        /** @var \App\Http\Guards\XwsseGuard $instance */
+                        /** @var \App\Http\Guards\TokenGuard $instance */
                         return $instance->check();
         }
         
@@ -1917,7 +1917,7 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function guest()
         {
-                        /** @var \App\Http\Guards\XwsseGuard $instance */
+                        /** @var \App\Http\Guards\TokenGuard $instance */
                         return $instance->guest();
         }
         
@@ -1929,7 +1929,7 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function user()
         {
-                        /** @var \App\Http\Guards\XwsseGuard $instance */
+                        /** @var \App\Http\Guards\TokenGuard $instance */
                         return $instance->user();
         }
         
@@ -1941,7 +1941,7 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function id()
         {
-                        /** @var \App\Http\Guards\XwsseGuard $instance */
+                        /** @var \App\Http\Guards\TokenGuard $instance */
                         return $instance->id();
         }
         
@@ -1954,7 +1954,7 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function validate($credentials = [])
         {
-                        /** @var \App\Http\Guards\XwsseGuard $instance */
+                        /** @var \App\Http\Guards\TokenGuard $instance */
                         return $instance->validate($credentials);
         }
         
@@ -1967,7 +1967,7 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function setUser($user)
         {
-                        /** @var \App\Http\Guards\XwsseGuard $instance */
+                        /** @var \App\Http\Guards\TokenGuard $instance */
                         $instance->setUser($user);
         }
          

@@ -4,17 +4,17 @@
 namespace App\Providers;
 
 
-use App\Http\Token\XWSSE;
+use App\Http\Token\AuthObject;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 
-class XwsseServiceProvider implements UserProvider
+class TokenServiceProvider implements UserProvider
 {
-    private $xwsse;
+    private $autObj;
 
     public function __construct()
     {
-        $this->xwsse = new XWSSE();
+        $this->autObj = new AuthObject();
     }
 
     /**

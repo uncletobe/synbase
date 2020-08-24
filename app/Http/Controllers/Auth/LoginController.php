@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use App\Http\Token\XWSSE;
+use App\Repositories\LoginRepository;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 
 class LoginController extends Controller
@@ -19,19 +18,18 @@ class LoginController extends Controller
         return view("site.auth.login");
     }
 
-    public function singIn(LoginRequest $request)
+    public function singIn(LoginRequest $request, LoginRepository $loginRepository)
     {
         $data = $request->input();
-        $xwsse = new XWSSE();
-        $objXwsse = $xwsse->get($data["email"], $data["password"]);
+        $authObj = $loginRepository->getUserToken($data["email"], $data["password"]);
 
-        if (empty($objXwsse->error)) {
-            Auth::login($objXwsse);
+        if (empty($authObj->error)) {
+            Auth::login($authObj);
             return redirect("/");
         }
 
         return back()
-            ->withErrors($objXwsse->error)
+            ->withErrors($authObj->error)
             ->withInput();
     }
 
