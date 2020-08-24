@@ -19,7 +19,7 @@ class RegisterController extends Controller
     {
         $data = $request->input();
         $authObj = $registerRepository->serverRequest($data["email"], $data["password"]);
-
+        
         if (empty($authObj->error)) {
             Auth::login($authObj);
             return redirect("/");

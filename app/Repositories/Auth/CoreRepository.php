@@ -33,16 +33,15 @@ class CoreRepository
 //            $role = $arr["roles"];
 //            $role = "default";
 
-
             if (!empty($arr["roles"]) && (in_array($arr["roles"][0], \Config::get("roles.available")))) {
                 $this->authObj->setRole($arr["roles"][0]);
             } else {
-                $this->authObj->error["other"] = "Доступ запрещен!";
+                $this->authObj->setRole("synonyms");
+                //$this->authObj->error["other"] = "Доступ запрещен!";
             }
 
             if (isset($arr["available_login"])) {
                $this->authObj->error["other"] = "Такой email уже занят, наверное вы регистрировались раньше. <br>Попробуйте <a href='/auth/reset' class='link-underline-danger'>восстановить пароль</a>.";
-               $errors->add("email", "my text");
                return false;
             }
 
