@@ -17,7 +17,9 @@ class RegisterRepository extends CoreRepository
      * @param string $password
      * @return Authenticatable $this->authObj;
      */
-    public function serverRequest($email, $password) {
+    public function serverRequest($email, $password)
+    {
+        $this->authObj->setUser($email);
 
         try {
             $response = Http::asForm()->post(self::REGISTRATION_URL, [
