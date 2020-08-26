@@ -1,18 +1,34 @@
 {% extends 'site/_layout.twig' %}
+{% set title = " - Восстановление пароля" %}
 
 {% block content %}
     <div class="row justify-content-center">
         <div class="col-lg-6">
             <h1 class="h3 mb-4">Восстановление пароля</h1>
             <p class="lead">Укажите email на который вы регистрировали личный кабинет и мы отправим на него ссылку, для изменения пароля.</p>
-            <form action="/" class="mb-5">
+            <form action="/reset" method="post" class="mb-5">
+                {{ csrf_field() }}
+
+                {% if not errors.first('email') is empty %}
+                    {% set em_e = true %}
+                    {% set em_error = "is-invalid" %}
+                    {% set em_msg = errors.first('email') %}
+                {% endif %}
+
+                {% if not errors.first('other') is empty %}
+                    <div class="alert alert-danger">{{ errors.first('other') | raw }}</div>
+                {% endif %}
+
                 <div class="form-group">
-                    <input class="form-control form-control-lg" type="text" aria-label="Email" placeholder="Email">
+                    <input class="form-control form-control-lg {{ em_error }}" name="email" type="text" aria-label="Email" placeholder="Email" value="{{ old("email") }}">
+                    {% if em_e %}
+                        <div class="invalid-feedback d-block">{{ em_msg }}</div>
+                    {% endif %}
                 </div>
                 <button class="btn btn-primary btn-lg btn-block mt-4">Восстановить пароль</button>
             </form>
-            <div class="h3 my-3"><a href="/auth/login" class="link-underline-secondary">Войти в личный кабинет</a></div>
-            <div class="h3 my-3"><a href="/auth/reg" class="link-underline-secondary">Зарегистрироваться</a></div>
+            <div class="h3 my-3"><a href="/login" class="link-underline-secondary">Войти в личный кабинет</a></div>
+            <div class="h3 my-3"><a href="/reg" class="link-underline-secondary">Зарегистрироваться</a></div>
         </div>
     </div>
 {% endblock %}

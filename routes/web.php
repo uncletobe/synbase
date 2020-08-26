@@ -23,6 +23,8 @@ Route::post('login', 'Auth\LoginController@singIn');
 Route::get('logout', 'Auth\LoginController@logout')->name("logout");
 Route::get('/registration', 'Auth\RegisterController@index');
 Route::post('/registration', 'Auth\RegisterController@registration')->name("registration");
+Route::get('/reset', 'Auth\ResetController@index');
+Route::post('/reset', 'Auth\ResetController@restore')->name("restore");
 
 
 Route::get('/profile', 'Site\ProfileController@index')->name("profile");

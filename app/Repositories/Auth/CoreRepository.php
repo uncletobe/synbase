@@ -41,7 +41,7 @@ class CoreRepository
             }
 
             if (isset($arr["available_login"])) {
-               $this->authObj->error["other"] = "Такой email уже занят, наверное вы регистрировались раньше. <br>Попробуйте <a href='/auth/reset' class='link-underline-danger'>восстановить пароль</a>.";
+               $this->authObj->error["other"] = "Такой email уже занят, наверное вы регистрировались раньше. <br>Попробуйте <a href='/reset' class='link-underline-danger'>восстановить пароль</a>.";
                return false;
             }
 
