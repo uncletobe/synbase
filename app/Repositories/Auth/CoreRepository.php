@@ -36,8 +36,7 @@ class CoreRepository
             if (!empty($arr["roles"]) && (in_array($arr["roles"][0], \Config::get("roles.available")))) {
                 $this->authObj->setRole($arr["roles"][0]);
             } else {
-                $this->authObj->setRole("synonyms");
-                //$this->authObj->error["other"] = "Доступ запрещен!";
+                $this->authObj->error["other"] = "Доступ запрещен!";
             }
 
             if (isset($arr["available_login"])) {

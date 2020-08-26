@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Site;
 
 use App\Http\Requests\SynonymRequest;
+use App\Repositories\Site\SynonymRepository;
 use Illuminate\Http\Request;
 
 class SynonymController extends BaseSiteController
@@ -22,9 +23,21 @@ class SynonymController extends BaseSiteController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(SynonymRequest $request)
+    public function create(SynonymRequest $request, SynonymRepository $synonymRepository)
     {
         $data = $request->input();
+        array_unshift($data["synonyms"], $data["synonym"]);
+
+        $errors = $synonymRepository->serverRequest($data["mainWord"], $data["synonyms"]);
+
+        if (empty($errors)) {
+            \Session::flash("info", "Синонимы успешно добавлены!");
+            \Session::flash("alert-class", "alert-success");
+
+            return redirect("/");
+        }
+
+        dd("wtf");
 
         //dd($data);
 

@@ -14,13 +14,13 @@ class SynonymRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            "word" => ['required', 'string', 'max:255'],
-            "synonym" => ['required', 'string', 'max:255'],
+            "mainWord" => ['required', 'string', 'max:255'],
+            "synonyms0" => ['required', 'string', 'max:255'],
         ];
 
-        for ($i = 0; $i < count($this->request->get("synonyms")); $i++) {
-            $rules["synonyms.".$i] = "string|max:255";
-        }
+//        for ($i = 0; $i < count($this->request->get("synonyms")); $i++) {
+//            $rules["synonyms.".$i] = "string|max:255";
+//        }
 
         return $rules;
     }
@@ -28,13 +28,13 @@ class SynonymRequest extends FormRequest
     public function attributes()
     {
         $attr = [
-            'word' => 'Название',
-            'synonym' => 'Синоним',
+            'mainWord' => 'Название',
+            'synonyms0' => 'Синоним',
         ];
 
-        for ($i = 0; $i < count($this->request->get("synonyms")); $i++) {
-            $attr["synonyms.".$i] = "Синоним №". ($i + 2);
-        }
+//        for ($i = 0; $i < count($this->request->get("synonyms")); $i++) {
+//            $attr["synonyms.".$i] = "Синоним №". ($i + 2);
+//        }
 
         return $attr;
     }

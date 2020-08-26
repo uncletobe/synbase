@@ -4,6 +4,22 @@
 {% block content %}
     <div class="row justify-content-center">
         <div class="col-xl-8">
+
+            {% if not app.session.get('info') is empty %}
+                <div class="alert alert-dismissable {{ app.session.get('alert-class') }}" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                    {{ app.session.get('info') }}
+                </div>
+            {% endif %}
+
+            {% if not errors.first('other') is empty %}
+                <div class="alert alert-danger">{{ errors.first('other') | raw }}</div>
+            {% endif %}
+
+            {{ errors.first("synonyms0") | raw }}
+
             <div id="formToggle" class="card card-form-toggle mb-3" role="button">
                 <div class="card-body py-4">
                     <div class="row align-items-center">
@@ -17,14 +33,19 @@
             <div id="formContainer" class="card d-none mb-3">
                 <div class="card-body">
                     <h3 class="mb-4">Новый список синонимов</h3>
-                    <form id="form" action="/add" method="post">
+                    <form id="form" action="/add-synonyms" method="post">
+                        {{ csrf_field() }}
                         <div id="inputsContainer">
                             <div class="form-group mb-4">
-                                <input type="text" name="words[]" data-word="main" class="form-control form-control-lg" aria-label="Введите слово" placeholder="Введите слово">
+                                <input type="text" name="mainWord" data-word="main" class="form-control form-control-lg" aria-label="Введите слово" placeholder="Введите слово">
                                 <div class="invalid-feedback">Введите главное слово</div>
                             </div>
                             <div class="form-group mb-4" data-clone>
-                                <input type="text" name="words[]" data-word="synonym" class="form-control form-control-lg" aria-label="Введите синоним" placeholder="Введите синоним">
+                                <input type="text" name="synonyms[]" data-word="synonym" class="form-control form-control-lg" aria-label="Введите синоним" placeholder="Введите синоним">
+                                <div class="invalid-feedback">Добавьте хотя бы один синоним</div>
+                            </div>
+                            <div class="form-group mb-4" data-clone>
+                                <input type="text" name="synonyms[]" data-word="synonym" class="form-control form-control-lg" aria-label="Введите синоним" placeholder="Введите синоним">
                                 <div class="invalid-feedback">Добавьте хотя бы один синоним</div>
                             </div>
                         </div>
@@ -124,41 +145,41 @@
             var form = document.getElementById('form');
 
             form.addEventListener('submit', function(event) {
-                var valid = true;
-                var inputs = this.querySelectorAll('input[type="text"]');
-                var mainWord = inputs[0];
+                // var valid = true;
+                // var inputs = this.querySelectorAll('input[type="text"]');
+                // var mainWord = inputs[0];
 
-                var synonyms = Array.prototype.filter.call(inputs, function (elem, index) {
-                    if (index !== 0) return elem;
-                });
+                // var synonyms = Array.prototype.filter.call(inputs, function (elem, index) {
+                //     if (index !== 0) return elem;
+                // });
 
-                inputs.forEach(function (elem) {
-                    elem.classList.remove('is-invalid');
-                });
+                // inputs.forEach(function (elem) {
+                //     elem.classList.remove('is-invalid');
+                // });
 
-                var validSynonyms = synonyms.filter(function (elem) {
-                    if (elem.value !== '') return elem;
-                });
+                // var validSynonyms = synonyms.filter(function (elem) {
+                //     if (elem.value !== '') return elem;
+                // });
 
-                if (mainWord.value === '') {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    mainWord.classList.add('is-invalid');
-                    valid = false;
-                }
+                // if (mainWord.value === '') {
+                //     event.preventDefault();
+                //     event.stopPropagation();
+                //     mainWord.classList.add('is-invalid');
+                //     valid = false;
+                // }
 
-                if (validSynonyms.length < 1) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    synonyms[0].classList.add('is-invalid');
-                    valid = false;
-                }
+                // if (validSynonyms.length < 1) {
+                //     event.preventDefault();
+                //     event.stopPropagation();
+                //     synonyms[0].classList.add('is-invalid');
+                //     valid = false;
+                // }
 
-                if (valid) {
-                    synonyms.forEach(function (elem) {
-                        if (elem.value === '') elem.setAttribute('disabled', 'true');
-                    });
-                }
+                // if (valid) {
+                //     synonyms.forEach(function (elem) {
+                //         if (elem.value === '') elem.setAttribute('disabled', 'true');
+                //     });
+                // }
             });
 
 
@@ -170,6 +191,7 @@
             var filledInput = [];
 
             document.addEventListener('keyup', function (event) {
+                const inputsFromDebugBar = 9;
                 var target = event.target;
                 var inputOnPage = document.querySelectorAll('input[type="text"]').length;
 
@@ -181,7 +203,7 @@
                     filledInput.push(target);
                 }
 
-                if (inputOnPage === filledInput.length) {
+                if (inputOnPage - inputsFromDebugBar === filledInput.length) {
                     var cloneFormGroup = inputsContainer.querySelector('[data-clone]').cloneNode(true);
                     cloneFormGroup.querySelector('input').value = '';
                     inputsContainer.append(cloneFormGroup);

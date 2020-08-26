@@ -8,9 +8,8 @@ use Illuminate\Support\Facades\Http;
 
 class XWSSE
 {
-    public static function generateXwsse()
+    public static function generate()
     {
-        $url = "http://api.japancar.ru/profile";
         $user = \Auth::user();
         $token = \Auth::token();
         $nonce = \Str::random(mt_rand(6, 12));
@@ -21,18 +20,10 @@ class XWSSE
 
         $digest = base64_encode(sha1($nonce . $time . $token, true));
 
-        try {
-            $response = Http::withHeaders([
-                'X-WSSE' => 'X-WSSE: UsernameToken Username="'. $user .'", PasswordDigest="'. $digest
-            .'", Nonce="'. $nonce .'", Created="'. $time . '"',
-            ])->post($url);
+        $xwsse = 'X-WSSE: UsernameToken Username="'. $user .'", PasswordDigest="'. $digest
+            .'", Nonce="'. $nonce .'", Created="'. $time . '"';
 
-        } catch (ConnectionException $e) {
-            dd($e);
-        }
-
-        $res = $response->body();
-        $result = Utils::getValidJsonFromApi($res);
+        return $xwsse;
     }
 
 }

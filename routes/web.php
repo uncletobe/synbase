@@ -26,6 +26,4 @@ Route::post('/registration', 'Auth\RegisterController@registration')->name("regi
 Route::get('/reset', 'Auth\ResetController@index');
 Route::post('/reset', 'Auth\ResetController@restore')->name("restore");
 
-
-Route::get('/profile', 'Site\ProfileController@index')->name("profile");
-Route::get('add-synonyms', 'Site\SynonymController@create')->name('create');
+Route::post('add-synonyms', 'Site\SynonymController@create')->name('create');
