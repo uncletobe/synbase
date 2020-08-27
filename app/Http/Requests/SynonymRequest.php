@@ -15,11 +15,11 @@ class SynonymRequest extends FormRequest
     {
         $rules = [
             "mainWord" => ['required', 'string', 'max:255'],
-            "synonyms0" => ['required', 'string', 'max:255'],
+            "synonyms.*" => ['nullable', 'string', 'max:255'],
         ];
 
-//        for ($i = 0; $i < count($this->request->get("synonyms")); $i++) {
-//            $rules["synonyms.".$i] = "string|max:255";
+//        for ($i = 1; $i < count($this->request->get("synonyms")); $i++) {
+//            $rules["synonyms.".$i] = "nullable|string|max:255";
 //        }
 
         return $rules;
@@ -29,12 +29,12 @@ class SynonymRequest extends FormRequest
     {
         $attr = [
             'mainWord' => 'Название',
-            'synonyms0' => 'Синоним',
+//            'synonyms.0' => 'Главный Синоним',
         ];
 
-//        for ($i = 0; $i < count($this->request->get("synonyms")); $i++) {
-//            $attr["synonyms.".$i] = "Синоним №". ($i + 2);
-//        }
+        for ($i = 0; $i < count($this->request->get("synonyms")); $i++) {
+            $attr["synonyms.".$i] = "Cиноним №". ($i + 1);
+        }
 
         return $attr;
     }

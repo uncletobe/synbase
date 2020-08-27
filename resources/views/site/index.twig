@@ -5,6 +5,8 @@
     <div class="row justify-content-center">
         <div class="col-xl-8">
 
+            {% set isError = (errors is empty) %}
+
             {% if not app.session.get('info') is empty %}
                 <div class="alert alert-dismissable {{ app.session.get('alert-class') }}" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -18,9 +20,7 @@
                 <div class="alert alert-danger">{{ errors.first('other') | raw }}</div>
             {% endif %}
 
-            {{ errors.first("synonyms0") | raw }}
-
-            <div id="formToggle" class="card card-form-toggle mb-3" role="button">
+            <div id="formToggle" class="card card-form-toggle {{ (isError) ? "" : "d-none" }} mb-3" role="button">
                 <div class="card-body py-4">
                     <div class="row align-items-center">
                         <div class="col-auto">
@@ -30,19 +30,15 @@
                     </div>
                 </div>
             </div>
-            <div id="formContainer" class="card d-none mb-3">
+            <div id="formContainer" class="card {{ (isError) ? "d-none" : "" }} mb-3">
                 <div class="card-body">
                     <h3 class="mb-4">Новый список синонимов</h3>
                     <form id="form" action="/add-synonyms" method="post">
                         {{ csrf_field() }}
                         <div id="inputsContainer">
                             <div class="form-group mb-4">
-                                <input type="text" name="mainWord" data-word="main" class="form-control form-control-lg" aria-label="Введите слово" placeholder="Введите слово">
+                                <input type="text" name="mainWord" data-word="main" class="form-control form-control-lg" aria-label="Введите слово" placeholder="Введите слово" value="{{ old("mainWord") }}">
                                 <div class="invalid-feedback">Введите главное слово</div>
-                            </div>
-                            <div class="form-group mb-4" data-clone>
-                                <input type="text" name="synonyms[]" data-word="synonym" class="form-control form-control-lg" aria-label="Введите синоним" placeholder="Введите синоним">
-                                <div class="invalid-feedback">Добавьте хотя бы один синоним</div>
                             </div>
                             <div class="form-group mb-4" data-clone>
                                 <input type="text" name="synonyms[]" data-word="synonym" class="form-control form-control-lg" aria-label="Введите синоним" placeholder="Введите синоним">
@@ -60,14 +56,17 @@
                     </form>
                 </div>
             </div>
+
             {% for words in synonyms %}
-                <div class="card mb-3">
+                <div class="card mb-3 {{ (words.state == 'canceled') ? "border border-danger" : "" }}">
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col">
                                 <ul class="row list-unstyled lead mb-0">
-                                    {% for word in words.list %}
-                                        <li class="col-auto my-1{% if loop.index == 1 %} font-weight-bold{% endif %}">{{ word }}</li>
+                                    <li class="col-auto my-1 font-weight-bold">{{ words.mainWord }}</li>
+                                    {% for word in words.synonyms %}
+                                        {# <li class="col-auto my-1{% if loop.index == 1 %} font-weight-bold{% endif %}">{{ word }}</li> #}
+                                        <li class="col-auto my-1">{{ word }}</li>
                                     {% endfor %}
                                 </ul>
                             </div>
@@ -145,41 +144,41 @@
             var form = document.getElementById('form');
 
             form.addEventListener('submit', function(event) {
-                // var valid = true;
-                // var inputs = this.querySelectorAll('input[type="text"]');
-                // var mainWord = inputs[0];
+                var valid = true;
+                var inputs = this.querySelectorAll('input[type="text"]');
+                var mainWord = inputs[0];
 
-                // var synonyms = Array.prototype.filter.call(inputs, function (elem, index) {
-                //     if (index !== 0) return elem;
-                // });
+                var synonyms = Array.prototype.filter.call(inputs, function (elem, index) {
+                    if (index !== 0) return elem;
+                });
 
-                // inputs.forEach(function (elem) {
-                //     elem.classList.remove('is-invalid');
-                // });
+                inputs.forEach(function (elem) {
+                    elem.classList.remove('is-invalid');
+                });
 
-                // var validSynonyms = synonyms.filter(function (elem) {
-                //     if (elem.value !== '') return elem;
-                // });
+                var validSynonyms = synonyms.filter(function (elem) {
+                    if (elem.value !== '') return elem;
+                });
 
-                // if (mainWord.value === '') {
-                //     event.preventDefault();
-                //     event.stopPropagation();
-                //     mainWord.classList.add('is-invalid');
-                //     valid = false;
-                // }
+                if (mainWord.value === '') {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    mainWord.classList.add('is-invalid');
+                    valid = false;
+                }
 
-                // if (validSynonyms.length < 1) {
-                //     event.preventDefault();
-                //     event.stopPropagation();
-                //     synonyms[0].classList.add('is-invalid');
-                //     valid = false;
-                // }
+                if (validSynonyms.length < 1) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    synonyms[0].classList.add('is-invalid');
+                    valid = false;
+                }
 
-                // if (valid) {
-                //     synonyms.forEach(function (elem) {
-                //         if (elem.value === '') elem.setAttribute('disabled', 'true');
-                //     });
-                // }
+                if (valid) {
+                    synonyms.forEach(function (elem) {
+                        if (elem.value === '') elem.setAttribute('disabled', 'true');
+                    });
+                }
             });
 
 
@@ -189,6 +188,7 @@
 
             var inputsContainer = document.getElementById('inputsContainer');
             var filledInput = [];
+            var inputLimit = 5;
 
             document.addEventListener('keyup', function (event) {
                 const inputsFromDebugBar = 9;
@@ -203,7 +203,7 @@
                     filledInput.push(target);
                 }
 
-                if (inputOnPage - inputsFromDebugBar === filledInput.length) {
+                if ((inputOnPage - inputsFromDebugBar === filledInput.length) && (inputOnPage - inputsFromDebugBar <= inputLimit)) {
                     var cloneFormGroup = inputsContainer.querySelector('[data-clone]').cloneNode(true);
                     cloneFormGroup.querySelector('input').value = '';
                     inputsContainer.append(cloneFormGroup);
@@ -225,7 +225,8 @@
                 var elem = this;
                 var timer = this.querySelector('[data-timer]');
 
-                var countDownDate = new Date(date);
+                // var countDownDate = new Date(date);
+                var countDownDate = date;
 
                 var x = setInterval(function() {
                     var now = new Date().getTime();

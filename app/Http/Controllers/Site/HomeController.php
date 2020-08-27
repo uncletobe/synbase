@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Site;
-use TwigBridge\Facade\Twig;
+
+use App\Emulate\Synonyms;
 
 class HomeController extends BaseSiteController
 {
-    public function index()
+    public function index(Synonyms $synonymsClass)
     {
-        return view("site.index");
+        $synonyms = $synonymsClass->getFromDB();
+        return view("site.index", compact("synonyms"));
     }
 }

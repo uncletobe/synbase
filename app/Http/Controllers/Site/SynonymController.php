@@ -26,8 +26,6 @@ class SynonymController extends BaseSiteController
     public function create(SynonymRequest $request, SynonymRepository $synonymRepository)
     {
         $data = $request->input();
-        array_unshift($data["synonyms"], $data["synonym"]);
-
         $errors = $synonymRepository->serverRequest($data["mainWord"], $data["synonyms"]);
 
         if (empty($errors)) {
